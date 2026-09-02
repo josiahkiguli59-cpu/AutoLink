@@ -1,0 +1,1463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AutoLink — quality new and used cars for sale in Uganda."
+    />
+    <title>AutoLink | New & Used Cars for Sale in Uganda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #061019;
+        --surface: #0c1722;
+        --surface2: #111f2d;
+        --line: #263746;
+        --text: #f7f9fb;
+        --muted: #aeb9c4;
+        --gold: #ffb400;
+        --gold2: #ffcc3d;
+        --danger: #ff5d5d;
+        --success: #37d39b;
+        --shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+        --radius: 18px;
+        --max: 1180px;
+      }
+      * {
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: radial-gradient(circle at 75% 0%, #172433 0, #061019 42%);
+        color: var(--text);
+        font-family: Inter, Arial, sans-serif;
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .container {
+        width: min(var(--max), calc(100% - 36px));
+        margin: auto;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(6, 16, 25, 0.86);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      nav {
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+      }
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        color: var(--gold);
+        font-size: 19px;
+        transform: skew(-7deg);
+      }
+      .brand span {
+        font-size: 20px;
+      }
+      .brand small {
+        display: block;
+        color: #8e9aa5;
+        font-size: 9px;
+        letter-spacing: 1.5px;
+        margin-top: -3px;
+      }
+      .links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        color: #d9e0e6;
+        font-size: 14px;
+      }
+      .links a {
+        position: relative;
+      }
+      .links a:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -9px;
+        width: 0;
+        height: 2px;
+        background: var(--gold);
+        transition: 0.25s;
+      }
+      .links a:hover:after,
+      .links a.active:after {
+        width: 100%;
+      }
+      .btn {
+        border: 0;
+        cursor: pointer;
+        background: linear-gradient(135deg, var(--gold), #f29a00);
+        color: #081018;
+        font-weight: 800;
+        padding: 13px 20px;
+        border-radius: 10px;
+        box-shadow: 0 10px 26px rgba(255, 180, 0, 0.2);
+        transition: 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.05);
+      }
+      .btn.secondary {
+        background: #162432;
+        color: white;
+        box-shadow: none;
+        border: 1px solid var(--line);
+      }
+      .menu {
+        display: none;
+        background: none;
+        border: 1px solid var(--line);
+        color: #fff;
+        padding: 8px 10px;
+        border-radius: 10px;
+        font-size: 20px;
+      }
+      .hero {
+        min-height: 680px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+      }
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(4, 11, 17, 0.98) 0%,
+            rgba(4, 11, 17, 0.88) 35%,
+            rgba(4, 11, 17, 0.2) 72%
+          ),
+          url("https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1800&q=85")
+            center/cover;
+      }
+      .hero:after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 180px;
+        background: linear-gradient(transpabuy, var(--bg));
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 82px 0 120px;
+        max-width: 640px;
+      }
+      .eyebrow {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--gold2);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 16px var(--gold);
+      }
+      h1 {
+        font-family: Manrope, Inter, sans-serif;
+        font-size: clamp(44px, 6vw, 78px);
+        line-height: 0.98;
+        letter-spacing: -3px;
+        margin: 20px 0;
+      }
+      h1 span {
+        color: var(--gold);
+      }
+      .lead {
+        font-size: 18px;
+        color: #d1d8df;
+        max-width: 560px;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+      }
+      .trust-row {
+        display: flex;
+        gap: 24px;
+        margin-top: 38px;
+        flex-wrap: wrap;
+        color: #dce3e8;
+        font-size: 13px;
+      }
+      .trust-row strong {
+        color: #fff;
+        font-size: 20px;
+        display: block;
+      }
+      .booking-card {
+        position: relative;
+        z-index: 5;
+        margin-top: -70px;
+      }
+      .booking-inner {
+        background: rgba(13, 25, 37, 0.96);
+        border: 1px solid #334454;
+        box-shadow: var(--shadow);
+        border-radius: 18px;
+        padding: 18px;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr 1fr auto;
+        gap: 10px;
+      }
+      .field {
+        background: #152331;
+        border: 1px solid #2a3a49;
+        border-radius: 11px;
+        padding: 11px 13px;
+      }
+      .field label {
+        display: block;
+        color: #8997a4;
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+      .field select,
+      .field input {
+        width: 100%;
+        background: transpabuy;
+        border: 0;
+        color: #f6f7f8;
+        outline: none;
+        font: inherit;
+      }
+      .field option {
+        background: #0d1925;
+      }
+      .section {
+        padding: 88px 0;
+      }
+      .section-head {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+      .section-head h2 {
+        font-family: Manrope;
+        font-size: 34px;
+        margin: 7px 0 10px;
+      }
+      .section-head p {
+        color: var(--muted);
+        max-width: 640px;
+        margin: auto;
+      }
+      .accent {
+        width: 62px;
+        height: 3px;
+        background: var(--gold);
+        margin: 0 auto;
+        border-radius: 9px;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        background: #0b1722;
+      }
+      .stat {
+        text-align: center;
+        padding: 27px 14px;
+        border-right: 1px solid var(--line);
+      }
+      .stat:last-child {
+        border: 0;
+      }
+      .stat .icon {
+        font-size: 27px;
+        color: var(--gold);
+      }
+      .stat strong {
+        display: block;
+        font-size: 21px;
+        margin-top: 7px;
+      }
+      .stat span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .fleet-tools {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .filter {
+        background: #101e2b;
+        border: 1px solid var(--line);
+        color: #cbd3da;
+        padding: 8px 13px;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .filter.active,
+      .filter:hover {
+        background: var(--gold);
+        color: #0a1219;
+        border-color: var(--gold);
+      }
+      .fleet {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+      }
+      .car {
+        background: linear-gradient(180deg, #172432, #0c1722);
+        border: 1px solid #2a3b4a;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.25s;
+        position: relative;
+      }
+      .car:hover {
+        transform: translateY(-5px);
+        border-color: #4a5b69;
+        box-shadow: var(--shadow);
+      }
+      .car-img {
+        height: 175px;
+        object-fit: cover;
+        width: 100%;
+        background: #172432;
+      }
+      .badge {
+        position: absolute;
+        top: 11px;
+        left: 11px;
+        background: var(--gold);
+        color: #081018;
+        font-size: 10px;
+        font-weight: 900;
+        padding: 5px 8px;
+        border-radius: 6px;
+      }
+      .car-body {
+        padding: 15px;
+      }
+      .car h3 {
+        margin: 0 0 4px;
+        font-size: 18px;
+      }
+      .meta {
+        display: flex;
+        gap: 10px;
+        color: #9caab6;
+        font-size: 11px;
+        flex-wrap: wrap;
+      }
+      .price {
+        color: var(--gold);
+        font-weight: 800;
+        margin: 13px 0;
+      }
+      .price small {
+        color: #9caab6;
+        font-weight: 500;
+      }
+      .car .btn {
+        width: 100%;
+        padding: 10px;
+      }
+      .promo {
+        margin-top: 55px;
+        border: 1px solid #a06d00;
+        background: linear-gradient(110deg, #1c1608, #111e29);
+        border-radius: 18px;
+        padding: 25px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .promo h3 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .promo p {
+        margin: 4px 0 0;
+        color: #c1c9d0;
+      }
+      .promo strong {
+        color: var(--gold);
+        font-size: 40px;
+      }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+      .step {
+        padding: 26px;
+        background: #0c1823;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+      .step-num {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        border: 1px solid #6d5420;
+        color: var(--gold);
+        font-weight: 800;
+      }
+      .step h3 {
+        font-size: 17px;
+        margin-bottom: 5px;
+      }
+      .step p {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .why {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: stretch;
+      }
+      .why-main {
+        padding: 38px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #172738, #0b1722);
+        border: 1px solid var(--line);
+      }
+      .why-main h2 {
+        font-family: Manrope;
+        font-size: 36px;
+        line-height: 1.1;
+      }
+      .why-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 25px;
+      }
+      .why-item {
+        background: #0b1621;
+        border: 1px solid var(--line);
+        padding: 17px;
+        border-radius: 13px;
+      }
+      .why-item b {
+        display: block;
+        color: #fff;
+        margin-bottom: 4px;
+      }
+      .why-item span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .why-photo {
+        min-height: 430px;
+        border-radius: 20px;
+        background: url("https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=85")
+          center/cover;
+        border: 1px solid var(--line);
+      }
+      .reviews {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+      .review {
+        background: #0c1823;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px;
+      }
+      .stars {
+        color: var(--gold);
+        letter-spacing: 2px;
+      }
+      .review p {
+        color: #d2d9df;
+        font-size: 14px;
+      }
+      .person {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 18px;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #243746;
+        font-weight: 800;
+        color: var(--gold);
+      }
+      .person small {
+        display: block;
+        color: #84919d;
+      }
+      .faq {
+        max-width: 800px;
+        margin: auto;
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--line);
+      }
+      .faq-q {
+        width: 100%;
+        padding: 20px 0;
+        background: none;
+        border: 0;
+        color: #fff;
+        text-align: left;
+        font-size: 16px;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+      }
+      .faq-a {
+        max-height: 0;
+        overflow: hidden;
+        color: var(--muted);
+        transition: max-height 0.3s;
+      }
+      .faq-item.open .faq-a {
+        max-height: 160px;
+        padding-bottom: 18px;
+      }
+      .cta {
+        border-radius: 22px;
+        padding: 40px;
+        background: linear-gradient(110deg, #f0a500, #ffc82e);
+        color: #081018;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      .cta h2 {
+        font-family: Manrope;bnbnbn
+        font-size: 32px;
+        margin: 0;
+      }
+      .cta p {
+        margin: 5px 0 0;
+      }
+      .cta .btn {
+        background: #081018;
+        color: #fff;
+        box-shadow: none;
+      }
+      footer {
+        margin-top: 90px;
+        border-top: 1px solid var(--line);
+        background: #040b11;
+        padding: 55px 0 20px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 35px;
+      }
+      .footer-col h4 {
+        margin-top: 0;
+      }
+      .footer-col a,
+      .footer-col p {
+        color: #8f9ca7;
+        font-size: 13px;
+        display: block;
+        margin: 8px 0;
+      }
+      .copyright {
+        border-top: 1px solid #152330;
+        margin-top: 35px;
+        padding-top: 18px;
+        color: #65727d;
+        font-size: 12px;
+        text-align: center;
+      }
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(8px);
+        display: none;
+        place-items: center;
+        z-index: 100;
+        padding: 20px;
+      }
+      .modal.show {
+        display: grid;
+      }
+      .modal-box {
+        width: min(620px, 100%);
+        background: #0d1a26;
+        border: 1px solid #334656;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 25px;
+      }
+      .modal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .close {
+        background: none;
+        border: 0;
+        color: #aeb9c4;
+        font-size: 27px;
+        cursor: pointer;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .form-grid .field.full {
+        grid-column: 1/-1;
+      }
+      .success {
+        display: none;
+        background: #10281f;
+        border: 1px solid #236d50;
+        color: #a8f0d0;
+        padding: 12px;
+        border-radius: 10px;
+        margin-top: 12px;
+      }
+      @media (max-width: 980px) {
+        .links {
+          display: none;
+        }
+        .menu {
+          display: block;
+        }
+        .booking-inner {
+          grid-template-columns: 1fr 1fr;
+        }
+        .fleet {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stat:nth-child(2) {
+          border-right: 0;
+        }
+        .stat:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--line);
+        }
+        .steps {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .why {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          min-height: 610px;
+        }
+      }
+      @media (max-width: 640px) {
+        .container {
+          width: min(100% - 24px, var(--max));
+        }
+        .hero-content {
+          padding: 60px 0 100px;
+        }
+        .hero:before {
+          background:
+            linear-gradient(
+              90deg,
+              rgba(4, 11, 17, 0.96),
+              rgba(4, 11, 17, 0.62)
+            ),
+            url("https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80")
+              center/cover;
+        }
+        .booking-inner {
+          grid-template-columns: 1fr;
+        }
+        .fleet {
+          grid-template-columns: 1fr;
+        }
+        .stats,
+        .steps,
+        .reviews,
+        .why-list {
+          grid-template-columns: 1fr;
+        }
+        .stat {
+          border-right: 0 !important;
+          border-bottom: 1px solid var(--line);
+        }
+        .stat:last-child {
+          border-bottom: 0;
+        }
+        .promo,
+        .cta {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .promo strong {
+          font-size: 32px;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-grid .field.full {
+          grid-column: auto;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .section {
+          padding: 65px 0;
+        }
+        h1 {
+          letter-spacing: -2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <nav>
+          <a class="brand" href="#home" aria-label="AutoLink home">
+            <div class="brand-mark">A</div>
+            <div><span>AUTOLINK</span><small>AUTO SALES & MOBILITY</small></div>
+          </a>
+          <div class="links">
+            <a href="#home" class="active">Home</a
+            ><a href="#fleet">Cars for Sale</a><a href="#how">How It Works</a
+            ><a href="#why">Why AutoLink</a><a href="#reviews">Reviews</a
+            ><a href="#contact">Contact</a>
+          </div>
+          <button class="btn" onclick="openModal()">Book Now</button>
+          <button class="menu" aria-label="Menu" onclick="toggleMenu()">
+            ☰
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="container hero-content">
+          <div class="eyebrow">
+            <span class="dot"></span> Quality cars. Transpabuy deals. Confident
+            buying.
+          </div>
+          <h1>FIND YOUR CAR.<br /><span>DRIVE YOUR FUTURE.</span></h1>
+          <p class="lead">
+            Shop quality new and carefully selected used cars with transpabuy
+            pricing, verified vehicle information and friendly buying support.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#fleet">Explore Cars for Sale</a
+            ><a class="btn secondary" href="#how">How to Buy</a>
+          </div>
+          <div class="trust-row">
+            <div><strong>24/7</strong>Buyer support</div>
+            <div><strong>50+</strong>Cars in stock</div>
+            <div><strong>4.9/5</strong>Buyer rating</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="booking-card">
+        <div class="container">
+          <form class="booking-inner" onsubmit="searchCars(event)">
+            <div class="field">
+              <label>Viewing location</label
+              ><select id="pickup">
+                <option>Kampala</option>
+                <option>Entebbe</option>
+                <option>Jinja</option>
+                <option>Other location</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Preferred viewing date</label
+              ><select id="year">
+                <option value="all">Any year</option>
+                <option>2026</option>
+                <option>2025</option>
+                <option>2024</option>
+                <option>2023</option>
+                <option>2022</option>
+                <option>2021</option>
+                <option>2020</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Preferred time</label
+              ><select id="budget">
+                <option value="all">Any budget</option>
+                <option value="100">Under UGX 100M</option>
+                <option value="200">UGX 100–200M</option>
+                <option value="300">UGX 200–300M</option>
+                <option value="500">UGX 300–500M</option>
+                <option value="501">UGX 500M+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Condition</label
+              ><select id="type">
+                <option value="all">Any vehicle</option>
+                <option value="suv">SUV</option>
+                <option value="sedan">Sedan</option>
+                <option value="mpv">MPV</option>
+              </select>
+            </div>
+            <button class="btn" type="submit">Find My Car</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="stats">
+            <div class="stat">
+              <div class="icon">★</div>
+              <strong>10+ Years</strong><span>Automotive Experience</span>
+            </div>
+            <div class="stat">
+              <div class="icon">♙</div>
+              <strong>5,000+</strong><span>Happy Buyers</span>
+            </div>
+            <div class="stat">
+              <div class="icon">▣</div>
+              <strong>50+</strong><span>Inspected Cars</span>
+            </div>
+            <div class="stat">
+              <div class="icon">◷</div>
+              <strong>24/7</strong><span>After-Sale Support</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="fleet">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Our inventory</div>
+            <h2>Choose Your Next Car</h2>
+            <div class="accent"></div>
+            <p>
+              From practical family cars to premium SUVs, discover new and used
+              vehicles selected for Ugandan roads and everyday life.
+            </p>
+          </div>
+          <p
+            style="
+              text-align: center;
+              color: #7f8d99;
+              font-size: 12px;
+              margin-top: -18px;
+              margin-bottom: 24px;
+            "
+          >
+            Design direction inspired by premium automotive boards on
+            <a
+              href="https://www.pinterest.com/search/pins/?q=luxury%20car%20dealership%20website"
+              target="_blank"
+              rel="noopener"
+              style="color: var(--gold)"
+              >Pinterest</a
+            >. Product photography is sourced from publicly accessible
+            automotive pages rather than hotlinking Pinterest pins.
+          </p>
+          <div class="fleet-tools">
+            <div class="filters">
+              <button class="filter active" data-filter="all">All Cars</button
+              ><button class="filter" data-filter="new">New</button
+              ><button class="filter" data-filter="used">Used</button
+              ><button class="filter" data-filter="suv">SUV</button
+              ><button class="filter" data-filter="mpv">MPV</button>
+            </div>
+            <span id="results" style="color: #82909c; font-size: 13px"
+              >4 vehicles</span
+            >
+          </div>
+          <div class="fleet" id="fleetGrid"></div>
+          <div class="promo">
+            <div><strong>20% OFF</strong></div>
+            <div>
+              <h3>Featured Deal</h3>
+              <p>
+                Ask about today's featured vehicle, inspection report and
+                flexible payment options. Terms apply.
+              </p>
+            </div>
+            <button class="btn" onclick="openModal('Weekend Offer')">
+              View Deal
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Buying made simple</div>
+            <h2>How to Buy From AutoLink</h2>
+            <div class="accent"></div>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <h3>Choose your car</h3>
+              <p>
+                Browse our inventory and select the vehicle that matches your
+                lifestyle and budget.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <h3>Check details</h3>
+              <p>
+                Review the model year, mileage, condition, features and asking
+                price.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <h3>Arrange inspection</h3>
+              <p>
+                Book an inspection or request more photos, documents and a
+                walk-around video.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-num">04</div>
+              <h3>Complete your purchase</h3>
+              <p>
+                Complete the paperwork and payment, then drive away in your
+                AutoLink vehicle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="container">
+          <div class="why">
+            <div class="why-main">
+              <div class="eyebrow">The AutoLink difference</div>
+              <h2>More than a car.<br />It's a confident purchase.</h2>
+              <p style="color: var(--muted)">
+                We combine carefully selected vehicles, clear information and
+                human support so you can focus on finding the right car.
+              </p>
+              <div class="why-list">
+                <div class="why-item">
+                  <b>Verified & inspected</b
+                  ><span
+                    >Vehicles are checked and presented with clear condition
+                    information.</span
+                  >
+                </div>
+                <div class="why-item">
+                  <b>Transpabuy pricing</b
+                  ><span
+                    >Know the asking price and important purchase costs before
+                    you commit.</span
+                  >
+                </div>
+                <div class="why-item">
+                  <b>Flexible viewing</b
+                  ><span
+                    >Arrange a viewing, inspection or video walk-around around
+                    your schedule.</span
+                  >
+                </div>
+                <div class="why-item">
+                  <b>After-sale support</b
+                  ><span
+                    >We remain available to help with ownership questions after
+                    purchase.</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="why-photo" aria-label="AutoLink vehicle"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Buyer stories</div>
+            <h2>What Our Buyers Say</h2>
+            <div class="accent"></div>
+          </div>
+          <div class="reviews">
+            <article class="review">
+              <div class="stars">★★★★★</div>
+              <p>
+                “The vehicle matched the description, the process was
+                straightforward, and the team communicated clearly from viewing
+                to purchase.”
+              </p>
+              <div class="person">
+                <div class="avatar">JM</div>
+                <div><b>James M.</b><small>Kampala</small></div>
+              </div>
+            </article>
+            <article class="review">
+              <div class="stars">★★★★★</div>
+              <p>
+                “I appreciated the transpabuy information and the chance to
+                inspect the vehicle before making my decision.”
+              </p>
+              <div class="person">
+                <div class="avatar">AN</div>
+                <div><b>Angela N.</b><small>Entebbe</small></div>
+              </div>
+            </article>
+            <article class="review">
+              <div class="stars">★★★★★</div>
+              <p>
+                “The car was clean, well presented and ready when promised.
+                AutoLink made buying feel simple.”
+              </p>
+              <div class="person">
+                <div class="avatar">DK</div>
+                <div><b>David K.</b><small>Jinja</small></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Need answers?</div>
+            <h2>Frequently Asked Questions</h2>
+            <div class="accent"></div>
+          </div>
+          <div class="faq">
+            <div class="faq-item">
+              <button class="faq-q">
+                What documents do I need to buy a car? <span>+</span>
+              </button>
+              <div class="faq-a">
+                Bring valid identification and the documents required for the
+                purchase and transfer process. Specific requirements can vary by
+                vehicle and transaction.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                Can I trade in my curbuy car? <span>+</span>
+              </button>
+              <div class="faq-a">
+                Yes. Ask our sales team about trade-in or part-exchange
+                possibilities for eligible vehicles.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                Can I finance my purchase? <span>+</span>
+              </button>
+              <div class="faq-a">
+                Financing availability depends on the vehicle, buyer and finance
+                provider. Contact AutoLink for curbuy options.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">
+                How do I reserve a car? <span>+</span>
+              </button>
+              <div class="faq-a">
+                Choose a vehicle, request an inspection/viewing and submit your
+                contact details. AutoLink can then confirm availability, price
+                and purchase steps.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="cta">
+            <div>
+              <h2>Ready to own your next car?</h2>
+              <p>
+                Find a vehicle you love, arrange a viewing and take the next
+                step toward ownership.
+              </p>
+            </div>
+            <button class="btn" onclick="openModal()">Talk to Sales</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <a class="brand" href="#home"
+              ><div class="brand-mark">A</div>
+              <div>
+                <span>AUTOLINK</span><small>AUTO SALES & MOBILITY</small>
+              </div></a
+            >
+            <p>
+              Reliable cars, transpabuy service and simple bookings for every
+              journey.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>AutoLink</h4>
+            <a href="#home">Home</a><a href="#fleet">Cars for Sale</a
+            ><a href="#why">About Us</a><a href="#reviews">Reviews</a>
+          </div>
+          <div class="footer-col">
+            <h4>Services</h4>
+            <a href="#fleet">New Cars</a><a href="#contact">Used Cars</a
+            ><a href="#contact">Trade-In</a
+            ><a href="#contact">Vehicle Sourcing</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <p>📍 Kampala, Uganda</p>
+            <p>☎ +256 700 000 000</p>
+            <p>✉ sales@autolink.example</p>
+            <p>Sales & WhatsApp available 24/7</p>
+          </div>
+        </div>
+        <div class="copyright">
+          © 2026 AutoLink Auto Sales & Mobility. All rights reserved.
+          <span style="margin-left: 8px">Privacy · Terms</span>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal" id="modal">
+      <div class="modal-box">
+        <div class="modal-head">
+          <div>
+            <div class="eyebrow">Vehicle enquiry</div>
+            <h2 style="margin: 5px 0 0; font-family: Manrope">
+              Buy a Car with AutoLink
+            </h2>
+          </div>
+          <button class="close" onclick="closeModal()">×</button>
+        </div>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+          <div class="form-grid" style="margin-top: 20px">
+            <div class="field">
+              <label>Full name</label
+              ><input id="name" required placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label>Phone / WhatsApp</label
+              ><input id="phone" required placeholder="+256 ..." />
+            </div>
+            <div class="field">
+              <label>Preferred viewing date</label
+              ><input id="modalPick" type="date" required />
+            </div>
+            <div class="field">
+              <label>Preferred time</label
+              ><input id="modalReturn" type="date" required />
+            </div>
+            <div class="field full">
+              <label>Vehicle</label
+              ><select id="vehicle"></select>
+            </div>
+            <div class="field full">
+              <label>Viewing location</label
+              ><select id="modalLocation">
+                <option>Kampala</option>
+                <option>Entebbe</option>
+                <option>Jinja</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label>Message</label
+              ><input
+                id="message"
+                placeholder="Ask about price, mileage, financing, trade-in or inspection."
+              />
+            </div>
+          </div>
+          <button
+            class="btn"
+            style="width: 100%; margin-top: 15px"
+            type="submit"
+          >
+            Send Enquiry
+          </button>
+          <div class="success" id="success">
+            Enquiry prepared. Your WhatsApp app will open with the vehicle
+            details.
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const cars = [
+        {
+          name: "Toyota Avanza",
+          type: "mpv",
+          condition: "used",
+          year: 2023,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "42,000 km",
+          price: 98000000,
+          img: "https://radartegal.disway.id/upload/8a0a67f2cdfa74add2dbb9a25b9b2564.jpg",
+          tag: "BEST SELLER",
+        },
+        {
+          name: "Toyota Innova Reborn",
+          type: "mpv",
+          condition: "used",
+          year: 2022,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "58,000 km",
+          price: 185000000,
+          img: "https://auto2000-malang.com/wp-content/uploads/2023/09/Toyota-Innova-Reborn-2.jpg",
+          tag: "POPULAR",
+        },
+        {
+          name: "Toyota Fortuner",
+          type: "suv",
+          condition: "new",
+          year: 2026,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "New",
+          price: 390000000,
+          img: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=82",
+          tag: "PREMIUM",
+        },
+        {
+          name: "Mitsubishi Xpander",
+          type: "mpv",
+          condition: "new",
+          year: 2026,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "New",
+          price: 210000000,
+          img: "https://drive.gianhangvn.com/image/ngoai-that-xpander-3-2135157j31757.jpg",
+          tag: "NEW",
+        },
+        {
+          name: "Toyota RAV4",
+          type: "suv",
+          condition: "used",
+          year: 2023,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "36,000 km",
+          price: 175000000,
+          img: "https://images.unsplash.com/photo-1568844293986-8c4c0f0f3a3a?auto=format&fit=crop&w=900&q=82",
+          tag: "VALUE",
+        },
+        {
+          name: "Toyota Corolla",
+          type: "sedan",
+          condition: "used",
+          year: 2024,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "21,000 km",
+          price: 145000000,
+          img: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=900&q=82",
+          tag: "LOW MILEAGE",
+        },
+      ];
+
+      const fmt = (n) => "UGX " + n.toLocaleString() + " / day";
+      function renderFleet(filter = "all") {
+        const grid = document.getElementById("fleetGrid");
+        const data =
+          filter === "all"
+            ? cars
+            : cars.filter((c) => c.condition === filter || c.type === filter);
+        grid.innerHTML = data
+          .map(
+            (c) => `
+    <article class="car">
+      <div class="badge">${c.tag}</div>
+      <img class="car-img" src="${c.img}" alt="${c.name}" loading="lazy">
+      <div class="car-body"><h3>${c.name}</h3>
+      <div class="meta"><span>${c.year}</span><span>${c.mileage}</span><span>${c.trans}</span><span>${c.seats} Seats</span></div>
+      <div class="price">${fmt(c.price)} <small>asking price</small></div>
+      <button class="btn" onclick="openModal('${c.name}')">Enquire to Buy</button></div>
+    </article>`,
+          )
+          .join("");
+        document.getElementById("results").textContent =
+          data.length + " car" + (data.length === 1 ? "" : "s") + " available";
+        document
+          .querySelectorAll(".filter")
+          .forEach((b) =>
+            b.classList.toggle("active", b.dataset.filter === filter),
+          );
+      }
+      renderFleet();
+
+      document
+        .querySelectorAll(".filter")
+        .forEach((b) => (b.onclick = () => renderFleet(b.dataset.filter)));
+      document
+        .querySelectorAll(".faq-q")
+        .forEach(
+          (q) => (q.onclick = () => q.pabuyElement.classList.toggle("open")),
+        );
+
+      function openModal(vehicleName = "") {
+        const sel = document.getElementById("vehicle");
+        sel.innerHTML = cars
+          .map(
+            (c) =>
+              `<option ${c.name === vehicleName ? "selected" : ""}>${c.name}</option>`,
+          )
+          .join("");
+        document.getElementById("modal").classList.add("show");
+      }
+      function closeModal() {
+        document.getElementById("modal").classList.remove("show");
+        document.getElementById("success").style.display = "none";
+      }
+      function submitBooking(e) {
+        e.preventDefault();
+        const data = {
+          name: document.getElementById("name").value,
+          phone: document.getElementById("phone").value,
+          vehicle: document.getElementById("vehicle").value,
+          pick: document.getElementById("modalPick").value,
+          time: document.getElementById("modalReturn").value,
+          location: document.getElementById("modalLocation").value,
+          message: document.getElementById("message").value,
+        };
+        localStorage.setItem("autolink_last_booking", JSON.stringify(data));
+        document.getElementById("success").style.display = "block";
+        const text = `Hello AutoLink, I am interested in buying this vehicle.%0A%0AName: ${encodeURIComponent(data.name)}%0APhone: ${encodeURIComponent(data.phone)}%0AVehicle: ${encodeURIComponent(data.vehicle)}%0AViewing date: ${encodeURIComponent(data.pick)}%0APreferred time: ${encodeURIComponent(data.time)}%0AViewing location: ${encodeURIComponent(data.location)}%0AMessage: ${encodeURIComponent(data.message || "None")}`;
+        setTimeout(
+          () =>
+            window.open("https://wa.me/256700000000?text=" + text, "_blank"),
+          500,
+        );
+      }
+      function searchCars(e) {
+        e.preventDefault();
+        const type = document.getElementById("type").value;
+        const year = document.getElementById("year").value;
+        const budget = document.getElementById("budget").value;
+        let data = cars.filter((c) => type === "all" || c.type === type);
+        if (year !== "all") data = data.filter((c) => String(c.year) === year);
+        if (budget !== "all") {
+          const b = Number(budget);
+          data = data.filter((c) =>
+            b === 100
+              ? c.price < 100000000
+              : b === 200
+                ? c.price >= 100000000 && c.price < 200000000
+                : b === 300
+                  ? c.price >= 200000000 && c.price < 300000000
+                  : b === 500
+                    ? c.price >= 300000000 && c.price < 500000000
+                    : c.price >= 500000000,
+          );
+        }
+        document.getElementById("fleetGrid").innerHTML = data
+          .map(
+            (c) => `
+    <article class="car"><div class="badge">${c.tag}</div><img class="car-img" src="${c.img}" alt="${c.name}" loading="lazy">
+    <div class="car-body"><h3>${c.name}</h3><div class="meta"><span>${c.year}</span><span>${c.mileage}</span><span>${c.trans}</span><span>${c.seats} Seats</span></div>
+    <div class="price">${fmt(c.price)} <small>asking price</small></div><button class="btn" onclick="openModal('${c.name}')">Enquire to Buy</button></div></article>`,
+          )
+          .join("");
+        document.getElementById("results").textContent =
+          data.length + " matching car" + (data.length === 1 ? "" : "s");
+        document.getElementById("fleet").scrollIntoView({ behavior: "smooth" });
+      }
+      function toggleMenu() {
+        const links = document.querySelector(".links");
+        const shown = links.style.display === "flex";
+        links.style.cssText = shown
+          ? ""
+          : "display:flex;position:absolute;top:76px;left:0;right:0;background:#08131d;padding:18px;flex-direction:column;border-bottom:1px solid #263746";
+      }
+      document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target.id === "modal") closeModal();
+      });
+    </script>
+  </body>
+</html>
