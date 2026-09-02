@@ -1124,7 +1124,7 @@
             </div>
             <div class="faq-item">
               <button class="faq-q">
-                Can I trade in my curbuy car? <span>+</span>
+                Can I trade in my current car? <span>+</span>
               </button>
               <div class="faq-a">
                 Yes. Ask our sales team about trade-in or part-exchange
@@ -1137,7 +1137,7 @@
               </button>
               <div class="faq-a">
                 Financing availability depends on the vehicle, buyer and finance
-                provider. Contact AutoLink for curbuy options.
+                provider. Contact AutoLink for current options.
               </div>
             </div>
             <div class="faq-item">
@@ -1238,7 +1238,7 @@
             </div>
             <div class="field">
               <label>Preferred time</label
-              ><input id="modalReturn" type="date" required />
+              ><input id="modalReturn" type="time" required />
             </div>
             <div class="field full">
               <label>Vehicle</label
@@ -1352,7 +1352,7 @@
         },
       ];
 
-      const fmt = (n) => "UGX " + n.toLocaleString() + " / day";
+      const fmt = (n) => "UGX " + n.toLocaleString();
       function renderFleet(filter = "all") {
         const grid = document.getElementById("fleetGrid");
         const data =
@@ -1388,7 +1388,7 @@
       document
         .querySelectorAll(".faq-q")
         .forEach(
-          (q) => (q.onclick = () => q.pabuyElement.classList.toggle("open")),
+          (q) => (q.onclick = () => q.parentElement.classList.toggle("open")),
         );
 
       function openModal(vehicleName = "") {
