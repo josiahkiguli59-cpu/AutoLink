@@ -1,22 +1,36 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Car, Lock, Mail, ArrowRight, AlertCircle, CheckCircle, Sparkles, User, Shield } from 'lucide-react';
-import { useAuth } from '@/lib/context/AuthContext';
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  Car,
+  Lock,
+  Mail,
+  ArrowRight,
+  AlertCircle,
+  CheckCircle,
+  Sparkles,
+  User,
+  Shield,
+} from "lucide-react";
+import { useAuth } from "@/lib/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { login, loginAsDemo, isEmailVerified } = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isResetSuccess, setIsResetSuccess] = useState(false);
 
-  const isResetSuccess = searchParams.get('mode') === 'reset';
+  useEffect(() => {
+    setIsResetSuccess(
+      new URLSearchParams(window.location.search).get("mode") === "reset",
+    );
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,17 +41,17 @@ export default function LoginPage() {
     setLoading(false);
 
     if (res.success) {
-      router.push('/');
+      router.push("/");
     } else {
-      setError(res.error || 'Invalid credentials. Please check your details.');
+      setError(res.error || "Invalid credentials. Please check your details.");
     }
   };
 
-  const handleDemo = (role: 'buyer' | 'seller' | 'admin') => {
+  const handleDemo = (role: "buyer" | "seller" | "admin") => {
     loginAsDemo(role);
-    if (role === 'admin') router.push('/admin');
-    else if (role === 'seller') router.push('/dashboard');
-    else router.push('/cars');
+    if (role === "admin") router.push("/admin");
+    else if (role === "seller") router.push("/dashboard");
+    else router.push("/cars");
   };
 
   return (
@@ -67,7 +81,9 @@ export default function LoginPage() {
           {isResetSuccess && (
             <div className="mb-6 flex items-center gap-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 text-xs text-emerald-400">
               <CheckCircle className="h-4 w-4 shrink-0" />
-              <span>Password reset link sent or completed! You can now log in.</span>
+              <span>
+                Password reset link sent or completed! You can now log in.
+              </span>
             </div>
           )}
 
@@ -146,17 +162,19 @@ export default function LoginPage() {
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => handleDemo('buyer')}
+                onClick={() => handleDemo("buyer")}
                 className="flex flex-col items-center justify-center gap-1 p-2 rounded-xl bg-surface-200 border border-border hover:border-gold-500/50 hover:bg-surface-100 transition-all text-left"
               >
                 <User className="h-4 w-4 text-emerald-400" />
                 <span className="text-[11px] font-bold text-white">Buyer</span>
-                <span className="text-[9px] text-slate-400">Browse &amp; Save</span>
+                <span className="text-[9px] text-slate-400">
+                  Browse &amp; Save
+                </span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleDemo('seller')}
+                onClick={() => handleDemo("seller")}
                 className="flex flex-col items-center justify-center gap-1 p-2 rounded-xl bg-surface-200 border border-border hover:border-gold-500/50 hover:bg-surface-100 transition-all text-left"
               >
                 <Car className="h-4 w-4 text-gold-400" />
@@ -166,7 +184,7 @@ export default function LoginPage() {
 
               <button
                 type="button"
-                onClick={() => handleDemo('admin')}
+                onClick={() => handleDemo("admin")}
                 className="flex flex-col items-center justify-center gap-1 p-2 rounded-xl bg-surface-200 border border-border hover:border-gold-500/50 hover:bg-surface-100 transition-all text-left"
               >
                 <Shield className="h-4 w-4 text-blue-400" />
@@ -179,8 +197,11 @@ export default function LoginPage() {
 
         {/* Footer Link */}
         <p className="text-center text-sm text-slate-400">
-          Don't have an account?{' '}
-          <Link href="/signup" className="font-semibold text-gold-400 hover:underline">
+          Don't have an account?{" "}
+          <Link
+            href="/signup"
+            className="font-semibold text-gold-400 hover:underline"
+          >
             Register now
           </Link>
         </p>

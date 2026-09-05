@@ -1,15 +1,17 @@
-import React from 'react';
-import Link from 'next/link';
-import { 
-  Car, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  MessageCircle, 
-  ShieldCheck, 
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import {
+  Car,
+  Phone,
+  Mail,
+  MapPin,
+  MessageCircle,
+  ShieldCheck,
   ArrowRight,
-  CheckCircle
-} from 'lucide-react';
+  CheckCircle,
+} from "lucide-react";
 
 export default function Footer() {
   return (
@@ -27,7 +29,9 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 max-w-sm">
-              Uganda's most reliable premium automotive marketplace. Connecting verified car buyers and trusted dealerships with direct WhatsApp contact and comprehensive mechanical inspection history.
+              Uganda's most reliable premium automotive marketplace. Connecting
+              verified car buyers and trusted dealerships with direct WhatsApp
+              contact and comprehensive mechanical inspection history.
             </p>
             <div className="pt-2 flex items-center gap-3">
               <a
@@ -53,32 +57,50 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/cars" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   All Inventory
                 </Link>
               </li>
               <li>
-                <Link href="/cars?condition=Brand+New" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?condition=Brand+New"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Brand New Cars
                 </Link>
               </li>
               <li>
-                <Link href="/cars?condition=Foreign+Used" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?condition=Foreign+Used"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Foreign Used Imports
                 </Link>
               </li>
               <li>
-                <Link href="/cars?body_type=SUV" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?body_type=SUV"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   SUVs & 4x4s
                 </Link>
               </li>
               <li>
-                <Link href="/compare" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/compare"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Compare Vehicles
                 </Link>
               </li>
               <li>
-                <Link href="/favorites" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/favorites"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Saved Favorites
                 </Link>
               </li>
@@ -92,27 +114,42 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/cars?make=Toyota" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?make=Toyota"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Toyota Land Cruiser
                 </Link>
               </li>
               <li>
-                <Link href="/cars?make=Toyota&model=Fortuner" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?make=Toyota&model=Fortuner"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Toyota Fortuner GD-6
                 </Link>
               </li>
               <li>
-                <Link href="/cars?make=Mercedes-Benz" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?make=Mercedes-Benz"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Mercedes GLE & C-Class
                 </Link>
               </li>
               <li>
-                <Link href="/cars?make=BMW" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?make=BMW"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   BMW X5 M Sport
                 </Link>
               </li>
               <li>
-                <Link href="/cars?make=Ford&model=Ranger" className="hover:text-gold-400 transition-colors">
+                <Link
+                  href="/cars?make=Ford&model=Ranger"
+                  className="hover:text-gold-400 transition-colors"
+                >
                   Ford Ranger Wildtrak
                 </Link>
               </li>
@@ -127,17 +164,25 @@ export default function Footer() {
             <div className="space-y-2.5 text-sm">
               <div className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 text-gold-400 mt-1 shrink-0" />
-                <span>Yusuf Lule Road &amp; Lugogo Bypass, Kampala, Uganda</span>
+                <span>
+                  Yusuf Lule Road &amp; Lugogo Bypass, Kampala, Uganda
+                </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-gold-400 shrink-0" />
-                <a href="tel:+256701234567" className="hover:text-white transition-colors">
+                <a
+                  href="tel:+256701234567"
+                  className="hover:text-white transition-colors"
+                >
                   +256 701 234 567
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-gold-400 shrink-0" />
-                <a href="mailto:sales@autolink.ug" className="hover:text-white transition-colors">
+                <a
+                  href="mailto:sales@autolink.ug"
+                  className="hover:text-white transition-colors"
+                >
                   sales@autolink.ug
                 </a>
               </div>
@@ -148,7 +193,13 @@ export default function Footer() {
               <p className="text-xs text-slate-300 font-medium mb-1.5">
                 Get price drops &amp; new arrivals:
               </p>
-              <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed to AutoLink car alerts!'); }} className="flex gap-1.5">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  alert("Subscribed to AutoLink car alerts!");
+                }}
+                className="flex gap-1.5"
+              >
                 <input
                   type="email"
                   placeholder="Your email address"
@@ -168,12 +219,23 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} AutoLink Automotive Ltd. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} AutoLink Automotive Ltd. All rights
+            reserved.
+          </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-slate-300">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-slate-300">Terms of Service</Link>
-            <Link href="/safety" className="hover:text-slate-300">Buyer Safety Tips</Link>
-            <span className="text-gold-400">Built with Next.js &amp; Supabase</span>
+            <Link href="/privacy" className="hover:text-slate-300">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-slate-300">
+              Terms of Service
+            </Link>
+            <Link href="/safety" className="hover:text-slate-300">
+              Buyer Safety Tips
+            </Link>
+            <span className="text-gold-400">
+              Built with Next.js &amp; Supabase
+            </span>
           </div>
         </div>
       </div>
