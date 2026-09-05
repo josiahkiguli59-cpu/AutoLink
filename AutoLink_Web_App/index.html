@@ -16,12 +16,13 @@
     />
     <style>
       :root {
-        --bg: #061019;
+        --bg: #eef3f5;
         --surface: #0c1722;
         --surface2: #111f2d;
         --line: #263746;
-        --text: #f7f9fb;
+        --text: #17232d;
         --muted: #aeb9c4;
+        --light-muted: #43515c;
         --gold: #ffb400;
         --gold2: #ffcc3d;
         --danger: #ff5d5d;
@@ -36,13 +37,187 @@
       }
       body {
         margin: 0;
-        background: radial-gradient(circle at 75% 0%, #172433 0, #061019 42%);
+        background: radial-gradient(circle at 75% 0%, #ffffff 0, #eef3f5 42%);
         color: var(--text);
         font-family: Inter, sans-serif;
         line-height: 1.55;
         font-feature-settings:
           "rlig" 1,
           "calt" 1;
+        overflow-x: hidden;
+      }
+      /* ── Lively Animations ── */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.85);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow:
+            0 0 16px var(--gold),
+            0 0 4px var(--gold);
+        }
+        50% {
+          box-shadow:
+            0 0 28px var(--gold),
+            0 0 12px var(--gold2);
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: -200% center;
+        }
+        100% {
+          background-position: 200% center;
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      @keyframes heroZoom {
+        from {
+          transform: scale(1.08);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+      @keyframes glowLine {
+        0%,
+        100% {
+          opacity: 0.4;
+          width: 62px;
+        }
+        50% {
+          opacity: 1;
+          width: 120px;
+        }
+      }
+      @keyframes particleFade {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-80px) scale(0.3);
+        }
+      }
+      /* ── 3D Scroll & Motion Effects ── */
+      body {
+        perspective: 1200px;
+      }
+      .section,
+      .hero,
+      .booking-card {
+        transform-style: preserve-3d;
+      }
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(50px) rotateX(12deg) scale(0.95);
+        transform-origin: center bottom;
+        transition:
+          opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform, opacity;
+      }
+      .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg) scale(1);
+      }
+      .scroll-progress {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 100;
+        height: 3px;
+        transform: scaleX(0);
+        transform-origin: left;
+        background: linear-gradient(90deg, var(--gold), var(--gold2));
+        box-shadow: 0 0 14px rgba(255, 180, 0, 0.75);
+        pointer-events: none;
+      }
+      .fleet .car {
+        opacity: 0;
+        transform: translateY(28px) scale(0.96);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.25s,
+          box-shadow 0.25s;
+        transition-delay: calc(var(--card-index, 0) * 45ms);
+      }
+      .fleet.cards-visible .car {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+        .scroll-progress {
+          display: none;
+        }
+      }
+      .car-3d-wrap {
+        perspective: 1000px;
       }
       a {
         color: inherit;
@@ -60,7 +235,7 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        background: rgba(6, 16, 25, 0.86);
+        background: rgba(6, 16, 25, 0.58);
         backdrop-filter: blur(18px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       }
@@ -88,6 +263,11 @@
         color: var(--gold);
         font-size: 19px;
         transform: skew(-7deg);
+        box-shadow: 0 0 12px rgba(255, 180, 0, 0.2);
+        transition: box-shadow 0.3s;
+      }
+      .brand:hover .brand-mark {
+        box-shadow: 0 0 22px rgba(255, 180, 0, 0.45);
       }
       .brand span {
         font-size: 20px;
@@ -134,9 +314,16 @@
         box-shadow: 0 10px 26px rgba(255, 180, 0, 0.2);
         transition: 0.2s;
       }
+      .topbar .btn {
+        font-size: 18px;
+        padding: 9px 14px;
+      }
       .btn:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.05);
+        transform: translateY(-3px) scale(1.03);
+        filter: brightness(1.08);
+        box-shadow:
+          0 14px 36px rgba(255, 180, 0, 0.35),
+          0 0 20px rgba(255, 180, 0, 0.15);
       }
       .btn.secondary {
         background: #162432;
@@ -164,14 +351,15 @@
         content: "";
         position: absolute;
         inset: 0;
+        animation: heroZoom 18s ease-out forwards;
         background:
           linear-gradient(
             90deg,
             rgba(4, 11, 17, 0.98) 0%,
-            rgba(4, 11, 17, 0.88) 35%,
-            rgba(4, 11, 17, 0.2) 72%
+            rgba(4, 11, 17, 0.85) 35%,
+            rgba(4, 11, 17, 0.15) 72%
           ),
-          url("https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1800&q=85")
+          url("https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&w=1800&q=85")
             center/cover;
       }
       .hero:after {
@@ -186,6 +374,7 @@
         z-index: 2;
         padding: 82px 0 120px;
         max-width: 640px;
+        animation: fadeInLeft 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
       }
       .eyebrow {
         display: inline-flex;
@@ -203,6 +392,7 @@
         border-radius: 50%;
         background: var(--gold);
         box-shadow: 0 0 16px var(--gold);
+        animation: pulse 2s ease-in-out infinite;
       }
       h1 {
         font-family: Manrope, Inter, sans-serif;
@@ -210,6 +400,9 @@
         line-height: 0.98;
         letter-spacing: -3px;
         margin: 20px 0;
+      }
+      .hero h1 {
+        color: #fff;
       }
       h1 span {
         color: var(--gold);
@@ -242,6 +435,7 @@
         position: relative;
         z-index: 5;
         margin-top: -70px;
+        animation: scaleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
       }
       .booking-inner {
         background: rgba(12, 23, 34, 0.85);
@@ -275,6 +469,10 @@
         outline: none;
         font: inherit;
       }
+      .field input::selection {
+        background: transparent;
+        color: inherit;
+      }
       .field option {
         background: #0d1925;
       }
@@ -288,19 +486,30 @@
       .section-head h2 {
         font-family: Manrope;
         font-size: 34px;
+        font-weight: 800;
         margin: 7px 0 10px;
       }
       .section-head p {
-        color: var(--muted);
+        color: var(--light-muted);
+        font-weight: 500;
         max-width: 640px;
         margin: auto;
       }
       .accent {
         width: 62px;
         height: 3px;
-        background: var(--gold);
+        background: linear-gradient(
+          90deg,
+          var(--gold),
+          var(--gold2),
+          var(--gold)
+        );
+        background-size: 200% 100%;
         margin: 0 auto;
         border-radius: 9px;
+        animation:
+          shimmer 3s ease-in-out infinite,
+          glowLine 4s ease-in-out infinite;
       }
       .stats {
         display: grid;
@@ -314,6 +523,10 @@
         text-align: center;
         padding: 27px 14px;
         border-right: 1px solid var(--line);
+        transition: background 0.3s;
+      }
+      .stat:hover {
+        background: rgba(255, 180, 0, 0.04);
       }
       .stat:last-child {
         border: 0;
@@ -350,6 +563,8 @@
         padding: 8px 13px;
         border-radius: 999px;
         cursor: pointer;
+        transition: all 0.25s;
+        font: inherit;
       }
       .filter.active,
       .filter:hover {
@@ -375,9 +590,11 @@
         position: relative;
       }
       .car:hover {
-        transform: translateY(-5px);
-        border-color: #4a5b69;
-        box-shadow: var(--shadow);
+        transform: translateY(-8px) scale(1.02);
+        border-color: rgba(255, 180, 0, 0.4);
+        box-shadow:
+          0 25px 60px rgba(0, 0, 0, 0.4),
+          0 0 30px rgba(255, 180, 0, 0.08);
       }
       .car-img {
         height: 175px;
@@ -456,6 +673,15 @@
         background: #0c1823;
         border: 1px solid var(--line);
         border-radius: 16px;
+        transition:
+          transform 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .step:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 180, 0, 0.3);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
       }
       .step-num {
         width: 42px;
@@ -517,9 +743,13 @@
       .why-photo {
         min-height: 430px;
         border-radius: 20px;
-        background: url("https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=85")
+        background: url("https://images.unsplash.com/photo-1519245659620-e859806a8d3b?auto=format&fit=crop&w=1000&q=85")
           center/cover;
         border: 1px solid var(--line);
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .why-photo:hover {
+        transform: scale(1.02);
       }
       .reviews {
         display: grid;
@@ -532,6 +762,15 @@
         border-radius: 18px;
         backdrop-filter: blur(12px);
         padding: 22px;
+        transition:
+          transform 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .review:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 180, 0, 0.25);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
       }
       .stars {
         color: var(--gold);
@@ -591,10 +830,24 @@
         max-height: 160px;
         padding-bottom: 18px;
       }
+      #faq .faq-item {
+        border-bottom-color: #c4cfd6;
+      }
+      #faq .faq-q {
+        color: var(--text);
+      }
+      #faq .faq-q span {
+        color: var(--gold);
+      }
+      #faq .faq-a {
+        color: var(--text);
+      }
       .cta {
         border-radius: 22px;
         padding: 40px;
-        background: linear-gradient(110deg, #f0a500, #ffc82e);
+        background: linear-gradient(110deg, #f0a500, #ffc82e, #f0a500, #ffc82e);
+        background-size: 300% 100%;
+        animation: gradientShift 6s ease-in-out infinite;
         color: #081018;
         display: flex;
         justify-content: space-between;
@@ -656,8 +909,19 @@
       .modal.show {
         display: grid;
       }
+      body.modal-open {
+        overflow: hidden;
+      }
       .modal-box {
+        position: fixed;
+        top: 20px;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
         width: min(620px, 100%);
+        max-height: none;
+        height: calc(100vh - 40px);
+        overflow-y: auto;
         background: #0d1a26;
         border: 1px solid #334656;
         border-radius: 20px;
@@ -692,6 +956,39 @@
         padding: 12px;
         border-radius: 10px;
         margin-top: 12px;
+      }
+      #fleet {
+        color: #000;
+      }
+      #fleet .eyebrow {
+        color: var(--gold);
+      }
+      #fleet .section-head p,
+      #fleet > .container > p,
+      #fleet #results,
+      #fleet .filter {
+        color: #000 !important;
+      }
+      #fleet .car,
+      #fleet .promo {
+        color: #fff;
+      }
+      .booking-inner .field label,
+      .stats .stat span,
+      .car .meta,
+      .car .price small,
+      .promo p,
+      .step p,
+      .why-main > p,
+      .why-item span,
+      .review p,
+      .person small,
+      .faq-a,
+      .footer-col a,
+      .footer-col p,
+      .copyright,
+      .modal-box .field label {
+        color: #fff;
       }
       @media (max-width: 980px) {
         .links {
@@ -742,7 +1039,7 @@
               rgba(4, 11, 17, 0.96),
               rgba(4, 11, 17, 0.62)
             ),
-            url("https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80")
+            url("https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&w=1200&q=80")
               center/cover;
         }
         .booking-inner {
@@ -791,6 +1088,7 @@
     </style>
   </head>
   <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <header class="topbar">
       <div class="container">
         <nav>
@@ -814,6 +1112,10 @@
 
     <main id="home">
       <section class="hero">
+        <canvas
+          id="particles"
+          style="position: absolute; inset: 0; z-index: 1; pointer-events: none"
+        ></canvas>
         <div class="container hero-content">
           <div class="eyebrow">
             <span class="dot"></span> Quality cars. Transparent deals. Confident
@@ -850,26 +1152,17 @@
             </div>
             <div class="field">
               <label>Preferred viewing date</label
-              ><select id="year">
-                <option value="all">Any year</option>
-                <option>2026</option>
-                <option>2025</option>
-                <option>2024</option>
-                <option>2023</option>
-                <option>2022</option>
-                <option>2021</option>
-                <option>2020</option>
-              </select>
+              ><input id="year" type="date" />
             </div>
             <div class="field">
-              <label>Preferred time</label
+              <label>Budget range</label
               ><select id="budget">
                 <option value="all">Any budget</option>
-                <option value="100">Under UGX 100M</option>
-                <option value="200">UGX 100–200M</option>
-                <option value="300">UGX 200–300M</option>
-                <option value="500">UGX 300–500M</option>
-                <option value="501">UGX 500M+</option>
+                <option value="50">Under UGX 50M</option>
+                <option value="100">UGX 50M–100M</option>
+                <option value="150">UGX 100M–150M</option>
+                <option value="250">UGX 150M–250M</option>
+                <option value="251">UGX 250M+</option>
               </select>
             </div>
             <div class="field">
@@ -888,7 +1181,7 @@
 
       <section class="section">
         <div class="container">
-          <div class="stats">
+          <div class="stats animate-on-scroll">
             <div class="stat">
               <div class="icon">★</div>
               <strong>10+ Years</strong><span>Automotive Experience</span>
@@ -911,7 +1204,7 @@
 
       <section class="section" id="fleet">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head animate-on-scroll">
             <div class="eyebrow">Our inventory</div>
             <h2>Choose Your Next Car</h2>
             <div class="accent"></div>
@@ -937,7 +1230,9 @@
               style="color: var(--gold)"
               >Pinterest</a
             >. Product photography is sourced from publicly accessible
-            automotive pages rather than hotlinking Pinterest pins.
+            automotive pages rather than hotlinking Pinterest pins. Prices shown
+            are indicative local asking prices and must be confirmed with
+            AutoLink before purchase.
           </p>
           <div class="fleet-tools">
             <div class="filters">
@@ -952,7 +1247,7 @@
             >
           </div>
           <div class="fleet" id="fleetGrid"></div>
-          <div class="promo">
+          <div class="promo animate-on-scroll">
             <div><strong>20% OFF</strong></div>
             <div>
               <h3>Featured Deal</h3>
@@ -970,12 +1265,12 @@
 
       <section class="section" id="how">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head animate-on-scroll">
             <div class="eyebrow">Buying made simple</div>
             <h2>How to Buy From AutoLink</h2>
             <div class="accent"></div>
           </div>
-          <div class="steps">
+          <div class="steps animate-on-scroll">
             <div class="step">
               <div class="step-num">01</div>
               <h3>Choose your car</h3>
@@ -1014,7 +1309,7 @@
 
       <section class="section" id="why">
         <div class="container">
-          <div class="why">
+          <div class="why animate-on-scroll">
             <div class="why-main">
               <div class="eyebrow">The AutoLink difference</div>
               <h2>More than a car.<br />It's a confident purchase.</h2>
@@ -1060,12 +1355,12 @@
 
       <section class="section" id="reviews">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head animate-on-scroll">
             <div class="eyebrow">Buyer stories</div>
             <h2>What Our Buyers Say</h2>
             <div class="accent"></div>
           </div>
-          <div class="reviews">
+          <div class="reviews animate-on-scroll">
             <article class="review">
               <div class="stars">★★★★★</div>
               <p>
@@ -1104,9 +1399,9 @@
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="faq">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head animate-on-scroll">
             <div class="eyebrow">Need answers?</div>
             <h2>Frequently Asked Questions</h2>
             <div class="accent"></div>
@@ -1156,7 +1451,7 @@
 
       <section class="section" id="contact">
         <div class="container">
-          <div class="cta">
+          <div class="cta animate-on-scroll">
             <div>
               <h2>Ready to own your next car?</h2>
               <p>
@@ -1199,8 +1494,8 @@
           <div class="footer-col">
             <h4>Contact</h4>
             <p>📍 Kampala, Uganda</p>
-            <p>☎ +256 700 000 000</p>
-            <p>✉ sales@autolink.example</p>
+            <p>☎ +256 787063953</p>
+            <p>✉ josiahkiguli59@gmail.com</p>
             <p>Sales & WhatsApp available 24/7</p>
           </div>
         </div>
@@ -1226,7 +1521,13 @@
           <div class="form-grid" style="margin-top: 20px">
             <div class="field">
               <label>Full name</label
-              ><input id="name" required placeholder="Your name" />
+              ><input
+                id="name"
+                required
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Your name"
+              />
             </div>
             <div class="field">
               <label>Phone / WhatsApp</label
@@ -1277,6 +1578,47 @@
     </div>
 
     <script>
+      const pinterestCarImages = [
+        "https://i.pinimg.com/736x/db/d7/c9/dbd7c943870f252d063a8f1ecbd884b1.jpg",
+        "https://i.pinimg.com/736x/18/a3/15/18a315b2155c7e40cb42272b1a5347f4.jpg",
+        "https://i.pinimg.com/736x/4c/ce/f6/4ccef6cc6d65736b2cd72166f4144fad.jpg",
+        "https://i.pinimg.com/736x/69/16/f9/6916f918438008effc63fadd8ffc9303.jpg",
+        "https://i.pinimg.com/736x/00/ad/5a/00ad5a2103466e65001ad78481b95d73.jpg",
+        "https://i.pinimg.com/736x/88/be/08/88be08cee9e85ff4bcea0033a90d9f39.jpg",
+        "https://i.pinimg.com/736x/fd/19/d8/fd19d8c69dd411a0da83d98490738e8f.jpg",
+        "https://i.pinimg.com/736x/48/8a/6f/488a6fe79e30ce9b8ac75f38d987183e.jpg",
+        "https://i.pinimg.com/736x/63/4b/4a/634b4a28c4ef2f36ec2991d619a3504e.jpg",
+        "https://i.pinimg.com/736x/c1/ea/f6/c1eaf689bf62d133f5077f3ef3c5cc02.jpg",
+        "https://i.pinimg.com/736x/ee/ce/42/eece4284757dcbcf300006e5a7aa4c87.jpg",
+        "https://i.pinimg.com/736x/e9/36/40/e93640777a5ea76c85f3a3480e634e1c.jpg",
+        "https://i.pinimg.com/736x/9e/8e/32/9e8e32c5cd9bdd3798ac9e23b423c2de.jpg",
+        "https://i.pinimg.com/736x/88/30/18/883018765732bc10a32cc9f63c619449.jpg",
+        "https://i.pinimg.com/736x/69/39/f1/6939f13ecbda2dccd2f7cbf76e7e5cae.jpg",
+        "https://i.pinimg.com/736x/75/38/c0/7538c013665ece47a51f94c22548e518.jpg",
+        "https://i.pinimg.com/736x/0b/d8/d5/0bd8d5b14d400abd5fe7c92e9ec552f4.jpg",
+        "https://i.pinimg.com/736x/e2/8c/58/e28c58d2d0a57591b05a1e40a69049d2.jpg",
+      ];
+      const pinterestModelImages = {
+        "Toyota Vitz":
+          "https://i.pinimg.com/736x/38/9a/fd/389afd50574a7b12d57bfc1b2a1d2a6c.jpg",
+        "Toyota Premio":
+          "https://i.pinimg.com/736x/cc/3f/91/cc3f9142fb47e7db9b8dc8c6b58aaa68.jpg",
+        "Nissan X-Trail":
+          "https://i.pinimg.com/736x/1d/a2/54/1da25411012210e562ca18ba5001258d.jpg",
+        "Nissan Note":
+          "https://i.pinimg.com/736x/98/09/1d/98091d8081615419e72ccd8887d24171.jpg",
+        "Nissan Serena":
+          "https://i.pinimg.com/736x/3b/94/c2/3b94c21f087387236e76d5636e870aa3.jpg",
+        "Honda CR-V":
+          "https://i.pinimg.com/736x/99/cd/7b/99cd7b9b12548a58558f0cac5c4c3b74.jpg",
+        "Suzuki Swift":
+          "https://i.pinimg.com/736x/08/68/35/086835745a959c160610556295dc49b0.jpg",
+        "Range Rover":
+          "https://i.pinimg.com/736x/08/5e/73/085e73939b89300033e5739147c7db1c.jpg",
+      };
+      const modelImage = (model, imageId) =>
+        pinterestModelImages[model] || null;
+
       const cars = [
         {
           name: "Toyota Avanza",
@@ -1286,8 +1628,8 @@
           seats: 7,
           trans: "Automatic",
           mileage: "42,000 km",
-          price: 98000000,
-          img: "https://radartegal.disway.id/upload/8a0a67f2cdfa74add2dbb9a25b9b2564.jpg",
+          price: 52000000,
+          img: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=82",
           tag: "BEST SELLER",
         },
         {
@@ -1298,8 +1640,8 @@
           seats: 7,
           trans: "Automatic",
           mileage: "58,000 km",
-          price: 185000000,
-          img: "https://auto2000-malang.com/wp-content/uploads/2023/09/Toyota-Innova-Reborn-2.jpg",
+          price: 78000000,
+          img: "https://i.pinimg.com/736x/c1/ea/f6/c1eaf689bf62d133f5077f3ef3c5cc02.jpg",
           tag: "POPULAR",
         },
         {
@@ -1310,7 +1652,7 @@
           seats: 7,
           trans: "Automatic",
           mileage: "New",
-          price: 390000000,
+          price: 260000000,
           img: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=82",
           tag: "PREMIUM",
         },
@@ -1322,7 +1664,7 @@
           seats: 7,
           trans: "Automatic",
           mileage: "New",
-          price: 210000000,
+          price: 135000000,
           img: "https://drive.gianhangvn.com/image/ngoai-that-xpander-3-2135157j31757.jpg",
           tag: "NEW",
         },
@@ -1334,8 +1676,8 @@
           seats: 5,
           trans: "Automatic",
           mileage: "36,000 km",
-          price: 175000000,
-          img: "https://images.unsplash.com/photo-1568844293986-8c4c0f0f3a3a?auto=format&fit=crop&w=900&q=82",
+          price: 85000000,
+          img: "https://i.pinimg.com/736x/db/d7/c9/dbd7c943870f252d063a8f1ecbd884b1.jpg",
           tag: "VALUE",
         },
         {
@@ -1346,11 +1688,419 @@
           seats: 5,
           trans: "Automatic",
           mileage: "21,000 km",
-          price: 145000000,
+          price: 68000000,
           img: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=900&q=82",
           tag: "LOW MILEAGE",
         },
-      ];
+        {
+          name: "Toyota Hilux Double Cab",
+          type: "suv",
+          condition: "used",
+          year: 2023,
+          seats: 5,
+          trans: "Manual",
+          mileage: "31,000 km",
+          price: 175000000,
+          img: "https://i.pinimg.com/736x/88/be/08/88be08cee9e85ff4bcea0033a90d9f39.jpg",
+          tag: "PICKUP",
+        },
+        {
+          name: "Mazda CX-5",
+          type: "suv",
+          condition: "used",
+          year: 2022,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "44,000 km",
+          price: 78000000,
+          img: "https://i.pinimg.com/736x/18/a3/15/18a315b2155c7e40cb42272b1a5347f4.jpg",
+          tag: "CROSSOVER",
+        },
+        {
+          name: "Honda Fit",
+          type: "sedan",
+          condition: "used",
+          year: 2022,
+          seats: 5,
+          trans: "CVT",
+          mileage: "28,000 km",
+          price: 32000000,
+          img: "https://i.pinimg.com/736x/4c/ce/f6/4ccef6cc6d65736b2cd72166f4144fad.jpg",
+          tag: "CITY CAR",
+        },
+        {
+          name: "Mercedes-Benz C-Class",
+          type: "sedan",
+          condition: "used",
+          year: 2022,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "18,000 km",
+          price: 145000000,
+          img: "https://i.pinimg.com/736x/69/16/f9/6916f918438008effc63fadd8ffc9303.jpg",
+          tag: "LUXURY",
+        },
+        {
+          name: "Toyota Vitz",
+          type: "sedan",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "CVT",
+          mileage: "39,000 km",
+          price: 26000000,
+          img: modelImage("Toyota Vitz", 1),
+          tag: "EFFICIENT",
+        },
+        {
+          name: "Toyota Premio",
+          type: "sedan",
+          condition: "used",
+          year: 2019,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "67,000 km",
+          price: 38000000,
+          img: modelImage("Toyota Premio", 2),
+          tag: "COMFORT",
+        },
+        {
+          name: "Toyota Harrier",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "41,000 km",
+          price: 88000000,
+          img: modelImage("Toyota Harrier", 3),
+          tag: "PREMIUM SUV",
+        },
+        {
+          name: "Toyota Land Cruiser Prado",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "72,000 km",
+          price: 265000000,
+          img: modelImage("Toyota Land Cruiser Prado", 4),
+          tag: "4X4",
+        },
+        {
+          name: "Nissan X-Trail",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "48,000 km",
+          price: 65000000,
+          img: modelImage("Nissan X-Trail", 5),
+          tag: "FAMILY SUV",
+        },
+        {
+          name: "Nissan Note",
+          type: "sedan",
+          condition: "used",
+          year: 2020,
+          seats: 5,
+          trans: "CVT",
+          mileage: "52,000 km",
+          price: 28000000,
+          img: modelImage("Nissan Note", 6),
+          tag: "VALUE",
+        },
+        {
+          name: "Nissan Serena",
+          type: "mpv",
+          condition: "used",
+          year: 2021,
+          seats: 8,
+          trans: "Automatic",
+          mileage: "55,000 km",
+          price: 58000000,
+          img: modelImage("Nissan Serena", 7),
+          tag: "8 SEATS",
+        },
+        {
+          name: "Honda CR-V",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "61,000 km",
+          price: 76000000,
+          img: modelImage("Honda CR-V", 8),
+          tag: "RELIABLE",
+        },
+        {
+          name: "Honda Vezel",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "37,000 km",
+          price: 64000000,
+          img: modelImage("Honda Vezel", 9),
+          tag: "HYBRID",
+        },
+        {
+          name: "Honda Freed",
+          type: "mpv",
+          condition: "used",
+          year: 2019,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "64,000 km",
+          price: 45000000,
+          img: modelImage("Honda Freed", 10),
+          tag: "PRACTICAL",
+        },
+        {
+          name: "Mazda Demio",
+          type: "sedan",
+          condition: "used",
+          year: 2020,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "46,000 km",
+          price: 29000000,
+          img: modelImage("Mazda Demio", 11),
+          tag: "CITY CAR",
+        },
+        {
+          name: "Mazda CX-3",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "35,000 km",
+          price: 58000000,
+          img: modelImage("Mazda CX-3", 12),
+          tag: "COMPACT SUV",
+        },
+        {
+          name: "Subaru Forester",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "58,000 km",
+          price: 72000000,
+          img: modelImage("Subaru Forester", 13),
+          tag: "ALL WHEEL DRIVE",
+        },
+        {
+          name: "Subaru Outback",
+          type: "suv",
+          condition: "used",
+          year: 2019,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "69,000 km",
+          price: 68000000,
+          img: modelImage("Subaru Outback", 14),
+          tag: "ADVENTURE",
+        },
+        {
+          name: "Suzuki Swift",
+          type: "sedan",
+          condition: "new",
+          year: 2025,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "New",
+          price: 58000000,
+          img: modelImage("Suzuki Swift", 15),
+          tag: "NEW",
+        },
+        {
+          name: "Suzuki Jimny",
+          type: "suv",
+          condition: "new",
+          year: 2025,
+          seats: 4,
+          trans: "Manual",
+          mileage: "New",
+          price: 98000000,
+          img: modelImage("Suzuki Jimny", 16),
+          tag: "OFF ROAD",
+        },
+        {
+          name: "Kia Sportage",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "43,000 km",
+          price: 78000000,
+          img: modelImage("Kia Sportage", 17),
+          tag: "FAMILY SUV",
+        },
+        {
+          name: "Kia Sorento",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "62,000 km",
+          price: 95000000,
+          img: modelImage("Kia Sorento", 18),
+          tag: "7 SEATS",
+        },
+        {
+          name: "Hyundai Tucson",
+          type: "suv",
+          condition: "used",
+          year: 2022,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "32,000 km",
+          price: 82000000,
+          img: modelImage("Hyundai Tucson", 19),
+          tag: "MODERN SUV",
+        },
+        {
+          name: "Hyundai Santa Fe",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "57,000 km",
+          price: 98000000,
+          img: modelImage("Hyundai Santa Fe", 20),
+          tag: "PREMIUM SUV",
+        },
+        {
+          name: "Volkswagen Tiguan",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "46,000 km",
+          price: 92000000,
+          img: modelImage("Volkswagen Tiguan", 21),
+          tag: "EUROPEAN",
+        },
+        {
+          name: "Volkswagen Polo",
+          type: "sedan",
+          condition: "used",
+          year: 2020,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "41,000 km",
+          price: 44000000,
+          img: modelImage("Volkswagen Polo", 22),
+          tag: "COMPACT",
+        },
+        {
+          name: "Ford Ranger",
+          type: "suv",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "49,000 km",
+          price: 165000000,
+          img: modelImage("Ford Ranger", 23),
+          tag: "PICKUP",
+        },
+        {
+          name: "Ford Everest",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "66,000 km",
+          price: 185000000,
+          img: modelImage("Ford Everest", 24),
+          tag: "7 SEATS",
+        },
+        {
+          name: "Mitsubishi Pajero",
+          type: "suv",
+          condition: "used",
+          year: 2018,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "88,000 km",
+          price: 125000000,
+          img: modelImage("Mitsubishi Pajero", 25),
+          tag: "4X4",
+        },
+        {
+          name: "Mitsubishi Outlander",
+          type: "suv",
+          condition: "used",
+          year: 2020,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "51,000 km",
+          price: 78000000,
+          img: modelImage("Mitsubishi Outlander", 26),
+          tag: "FAMILY SUV",
+        },
+        {
+          name: "Toyota Sienta",
+          type: "mpv",
+          condition: "used",
+          year: 2020,
+          seats: 7,
+          trans: "Automatic",
+          mileage: "47,000 km",
+          price: 46000000,
+          img: modelImage("Toyota Sienta", 27),
+          tag: "COMPACT MPV",
+        },
+        {
+          name: "Toyota Noah",
+          type: "mpv",
+          condition: "used",
+          year: 2021,
+          seats: 8,
+          trans: "Automatic",
+          mileage: "53,000 km",
+          price: 68000000,
+          img: modelImage("Toyota Noah", 28),
+          tag: "8 SEATS",
+        },
+        {
+          name: "BMW 3 Series",
+          type: "sedan",
+          condition: "used",
+          year: 2021,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "25,000 km",
+          price: 155000000,
+          img: modelImage("BMW 3 Series", 29),
+          tag: "EXECUTIVE",
+        },
+        {
+          name: "Range Rover",
+          type: "suv",
+          condition: "used",
+          year: 2024,
+          seats: 5,
+          trans: "Automatic",
+          mileage: "12,000 km",
+          price: 175000000,
+          img: modelImage("Range Rover", 30),
+          tag: "LUXURY SUV",
+        },
+      ].filter((car) => car.img);
 
       const fmt = (n) => "UGX " + n.toLocaleString();
       function renderFleet(filter = "all") {
@@ -1361,13 +2111,13 @@
             : cars.filter((c) => c.condition === filter || c.type === filter);
         grid.innerHTML = data
           .map(
-            (c) => `
-    <article class="car">
+            (c, index) => `
+    <article class="car" style="--card-index: ${index}">
       <div class="badge">${c.tag}</div>
       <img class="car-img" src="${c.img}" alt="${c.name}" loading="lazy">
       <div class="car-body"><h3>${c.name}</h3>
       <div class="meta"><span>${c.year}</span><span>${c.mileage}</span><span>${c.trans}</span><span>${c.seats} Seats</span></div>
-      <div class="price">${fmt(c.price)} <small>asking price</small></div>
+      <div class="price">${fmt(c.price)} <small>indicative price</small></div>
       <button class="btn" onclick="openModal('${c.name}')">Enquire to Buy</button></div>
     </article>`,
           )
@@ -1391,6 +2141,19 @@
           (q) => (q.onclick = () => q.parentElement.classList.toggle("open")),
         );
 
+      const today = new Date().toISOString().split("T")[0];
+      [document.getElementById("year"), document.getElementById("modalPick")].forEach(
+        (dateInput) => {
+          dateInput.min = today;
+          dateInput.value = today;
+        },
+      );
+      const currentTime = new Date();
+      document.getElementById("modalReturn").value = [
+        currentTime.getHours().toString().padStart(2, "0"),
+        currentTime.getMinutes().toString().padStart(2, "0"),
+      ].join(":");
+
       function openModal(vehicleName = "") {
         const sel = document.getElementById("vehicle");
         sel.innerHTML = cars
@@ -1399,10 +2162,14 @@
               `<option ${c.name === vehicleName ? "selected" : ""}>${c.name}</option>`,
           )
           .join("");
-        document.getElementById("modal").classList.add("show");
+        const modal = document.getElementById("modal");
+        modal.classList.add("show");
+        document.body.classList.add("modal-open");
+        modal.querySelector(".close").focus();
       }
       function closeModal() {
         document.getElementById("modal").classList.remove("show");
+        document.body.classList.remove("modal-open");
         document.getElementById("success").style.display = "none";
       }
       function submitBooking(e) {
@@ -1428,30 +2195,28 @@
       function searchCars(e) {
         e.preventDefault();
         const type = document.getElementById("type").value;
-        const year = document.getElementById("year").value;
         const budget = document.getElementById("budget").value;
         let data = cars.filter((c) => type === "all" || c.type === type);
-        if (year !== "all") data = data.filter((c) => String(c.year) === year);
         if (budget !== "all") {
           const b = Number(budget);
           data = data.filter((c) =>
-            b === 100
-              ? c.price < 100000000
-              : b === 200
-                ? c.price >= 100000000 && c.price < 200000000
-                : b === 300
-                  ? c.price >= 200000000 && c.price < 300000000
-                  : b === 500
-                    ? c.price >= 300000000 && c.price < 500000000
-                    : c.price >= 500000000,
+            b === 50
+              ? c.price < 50000000
+              : b === 100
+                ? c.price >= 50000000 && c.price < 100000000
+                : b === 150
+                  ? c.price >= 100000000 && c.price < 150000000
+                  : b === 250
+                    ? c.price >= 150000000 && c.price < 250000000
+                    : c.price >= 250000000,
           );
         }
         document.getElementById("fleetGrid").innerHTML = data
           .map(
-            (c) => `
-    <article class="car"><div class="badge">${c.tag}</div><img class="car-img" src="${c.img}" alt="${c.name}" loading="lazy">
+            (c, index) => `
+    <article class="car" style="--card-index: ${index}"><div class="badge">${c.tag}</div><img class="car-img" src="${c.img}" alt="${c.name}" loading="lazy">
     <div class="car-body"><h3>${c.name}</h3><div class="meta"><span>${c.year}</span><span>${c.mileage}</span><span>${c.trans}</span><span>${c.seats} Seats</span></div>
-    <div class="price">${fmt(c.price)} <small>asking price</small></div><button class="btn" onclick="openModal('${c.name}')">Enquire to Buy</button></div></article>`,
+    <div class="price">${fmt(c.price)} <small>indicative price</small></div><button class="btn" onclick="openModal('${c.name}')">Enquire to Buy</button></div></article>`,
           )
           .join("");
         document.getElementById("results").textContent =
@@ -1468,6 +2233,181 @@
       document.getElementById("modal").addEventListener("click", (e) => {
         if (e.target.id === "modal") closeModal();
       });
+
+      /* ── Floating Gold Particles ── */
+      (function () {
+        const canvas = document.getElementById("particles");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        let w,
+          h,
+          particles = [];
+        function resize() {
+          const hero = canvas.parentElement;
+          w = canvas.width = hero.offsetWidth;
+          h = canvas.height = hero.offsetHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+        for (let i = 0; i < 50; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 2.2 + 0.6,
+            dx: (Math.random() - 0.5) * 0.4,
+            dy: (Math.random() - 0.5) * 0.3,
+            o: Math.random() * 0.5 + 0.15,
+          });
+        }
+        function draw() {
+          ctx.clearRect(0, 0, w, h);
+          particles.forEach((p) => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,180,0,${p.o})`;
+            ctx.fill();
+            p.x += p.dx;
+            p.y += p.dy;
+            if (p.x < 0 || p.x > w) p.dx *= -1;
+            if (p.y < 0 || p.y > h) p.dy *= -1;
+          });
+          requestAnimationFrame(draw);
+        }
+        draw();
+      })();
+
+      /* ── Scroll-triggered Reveal ── */
+      (function () {
+        const els = document.querySelectorAll(".animate-on-scroll");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 },
+        );
+        els.forEach((el) => observer.observe(el));
+      })();
+
+      /* ── Scroll progress and fleet reveal ── */
+      (function () {
+        const progress = document.querySelector(".scroll-progress");
+        const fleet = document.querySelector(".fleet");
+        let ticking = false;
+
+        function updateScrollEffects() {
+          const scrollable =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const amount = scrollable > 0 ? window.scrollY / scrollable : 0;
+          progress.style.transform = `scaleX(${Math.min(amount, 1)})`;
+          ticking = false;
+        }
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              window.requestAnimationFrame(updateScrollEffects);
+              ticking = true;
+            }
+          },
+          { passive: true },
+        );
+        updateScrollEffects();
+
+        if (fleet) {
+          const observer = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                fleet.classList.add("cards-visible");
+                observer.disconnect();
+              }
+            },
+            { threshold: 0.08 },
+          );
+          observer.observe(fleet);
+        }
+      })();
+
+      /* ── Smooth counter animation for stats ── */
+      (function () {
+        const stats = document.querySelectorAll(".stat strong");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const el = entry.target;
+                const text = el.textContent;
+                const match = text.match(/^([\d,]+)/);
+                if (match) {
+                  const target = parseInt(match[1].replace(/,/g, ""));
+                  let current = 0;
+                  const step = Math.ceil(target / 60);
+                  const suffix = text.replace(match[1], "");
+                  const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                      current = target;
+                      clearInterval(timer);
+                    }
+                    el.textContent = current.toLocaleString() + suffix;
+                  }, 25);
+                }
+                observer.unobserve(el);
+              }
+            });
+          },
+          { threshold: 0.5 },
+        );
+        stats.forEach((s) => observer.observe(s));
+      })();
+
+      /* ── 3D Scroll Effect ── */
+      (function () {
+        let ticking = false;
+        function onScroll3D() {
+          const scrollY =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const hero = document.querySelector(".hero");
+          if (hero) {
+            const heroContent = hero.querySelector(".hero-content");
+            if (heroContent && scrollY < 800) {
+              const tilt = (scrollY * 0.04).toFixed(2);
+              const z = (scrollY * -0.4).toFixed(2);
+              heroContent.style.transform = `translateY(${scrollY * 0.22}px) rotateX(${tilt}deg) translateZ(${z}px)`;
+            }
+          }
+          const cards = document.querySelectorAll(".car");
+          cards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            const winH = window.innerHeight;
+            if (rect.top < winH && rect.bottom > 0) {
+              const centerDist =
+                (rect.top + rect.height / 2 - winH / 2) / (winH / 2);
+              const rotate = (centerDist * -4.5).toFixed(2);
+              const tz = Math.max(0, (1 - Math.abs(centerDist)) * 25).toFixed(
+                2,
+              );
+              card.style.transform = `perspective(800px) rotateX(${rotate}deg) translateZ(${tz}px)`;
+            }
+          });
+          ticking = false;
+        }
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              window.requestAnimationFrame(onScroll3D);
+              ticking = true;
+            }
+          },
+          { passive: true },
+        );
+      })();
     </script>
   </body>
 </html>
