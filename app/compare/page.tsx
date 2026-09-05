@@ -1,37 +1,40 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { 
-  Layers, 
-  Trash2, 
-  Plus, 
-  X, 
-  Check, 
-  MessageCircle, 
-  ArrowRight, 
-  CheckCircle2, 
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  Layers,
+  Trash2,
+  Plus,
+  X,
+  Check,
+  MessageCircle,
+  ArrowRight,
+  CheckCircle2,
   ChevronRight,
   ShieldCheck,
-  AlertCircle
-} from 'lucide-react';
-import { useCompare } from '@/lib/context/CompareContext';
-import { useCars } from '@/lib/context/CarsContext';
-import { formatPrice, formatMileage, generateWhatsAppLink } from '@/lib/utils';
-import { Car } from '@/types';
+  AlertCircle,
+} from "lucide-react";
+import { useCompare } from "@/lib/context/CompareContext";
+import { useCars } from "@/lib/context/CarsContext";
+import { formatPrice, formatMileage, generateWhatsAppLink } from "@/lib/utils";
+import { Car } from "@/types";
 
 export default function ComparePage() {
-  const { compareList, removeFromCompare, clearCompare, addToCompare } = useCompare();
+  const { compareList, removeFromCompare, clearCompare, addToCompare } =
+    useCompare();
   const { cars } = useCars();
   const [selectorOpen, setSelectorOpen] = useState(false);
 
   // Available cars not already in compare
-  const availableToAdd = cars.filter((c) => !compareList.some((item) => item.id === c.id));
+  const availableToAdd = cars.filter(
+    (c) => !compareList.some((item) => item.id === c.id),
+  );
 
   // Common distinct features list across compared cars
   const allFeatures = Array.from(
-    new Set(compareList.flatMap((car) => car.features || []))
+    new Set(compareList.flatMap((car) => car.features || [])),
   ).slice(0, 10);
 
   return (
@@ -80,7 +83,9 @@ export default function ComparePage() {
         {selectorOpen && (
           <div className="my-6 rounded-3xl border border-gold-500/40 bg-surface-300 p-6 shadow-2xl animate-in fade-in duration-150">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-bold text-white">Select a vehicle to compare</h3>
+              <h3 className="text-sm font-bold text-white">
+                Select a vehicle to compare
+              </h3>
               <button
                 onClick={() => setSelectorOpen(false)}
                 className="text-slate-400 hover:text-white"
@@ -89,7 +94,9 @@ export default function ComparePage() {
               </button>
             </div>
             {availableToAdd.length === 0 ? (
-              <p className="text-xs text-slate-400">All available vehicles are already in comparison.</p>
+              <p className="text-xs text-slate-400">
+                All available vehicles are already in comparison.
+              </p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-h-72 overflow-y-auto pr-1">
                 {availableToAdd.map((car) => (
@@ -103,7 +110,7 @@ export default function ComparePage() {
                   >
                     <div className="relative h-12 w-14 rounded-lg overflow-hidden shrink-0">
                       <Image
-                        src={car.images[0] || ''}
+                        src={car.images[0] || ""}
                         alt={car.title}
                         fill
                         className="object-cover"
@@ -130,9 +137,12 @@ export default function ComparePage() {
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
               <Layers className="h-8 w-8" />
             </div>
-            <h3 className="text-xl font-bold text-white">Comparison list is empty</h3>
+            <h3 className="text-xl font-bold text-white">
+              Comparison list is empty
+            </h3>
             <p className="text-xs sm:text-sm text-slate-400">
-              Select vehicles while browsing the inventory or click below to pick vehicles to compare side-by-side.
+              Select vehicles while browsing the inventory or click below to
+              pick vehicles to compare side-by-side.
             </p>
             <div className="pt-2">
               <Link
@@ -154,7 +164,10 @@ export default function ComparePage() {
                     Vehicle
                   </th>
                   {compareList.map((car) => {
-                    const sellerPhone = car.seller?.whatsapp || car.seller?.phone || '+256701234567';
+                    const sellerPhone =
+                      car.seller?.whatsapp ||
+                      car.seller?.phone ||
+                      "+256770864985";
                     const whatsappUrl = generateWhatsAppLink({
                       phoneNumber: sellerPhone,
                       carTitle: `${car.year} ${car.make} ${car.model}`,
@@ -163,12 +176,15 @@ export default function ComparePage() {
                     });
 
                     return (
-                      <th key={car.id} className="p-4 sm:p-6 min-w-[260px] align-top">
+                      <th
+                        key={car.id}
+                        className="p-4 sm:p-6 min-w-[260px] align-top"
+                      >
                         <div className="space-y-3">
                           {/* Photo */}
                           <div className="relative h-44 rounded-2xl overflow-hidden bg-surface-200">
                             <Image
-                              src={car.images[0] || ''}
+                              src={car.images[0] || ""}
                               alt={car.title}
                               fill
                               className="object-cover"
@@ -230,7 +246,9 @@ export default function ComparePage() {
               <tbody className="divide-y divide-border/60 text-xs">
                 {/* Row: Model Year */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Model Year</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Model Year
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 font-semibold text-white">
                       {c.year}
@@ -240,7 +258,9 @@ export default function ComparePage() {
 
                 {/* Row: Mileage */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Mileage</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Mileage
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 font-semibold text-white">
                       {formatMileage(c.mileage)}
@@ -250,17 +270,21 @@ export default function ComparePage() {
 
                 {/* Row: Engine Capacity */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Engine</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Engine
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 text-slate-200">
-                      {c.engine_capacity || 'N/A'}
+                      {c.engine_capacity || "N/A"}
                     </td>
                   ))}
                 </tr>
 
                 {/* Row: Transmission */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Transmission</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Transmission
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 font-semibold text-white">
                       {c.transmission}
@@ -270,7 +294,9 @@ export default function ComparePage() {
 
                 {/* Row: Fuel Type */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Fuel Type</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Fuel Type
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 text-slate-200">
                       {c.fuel_type}
@@ -280,17 +306,21 @@ export default function ComparePage() {
 
                 {/* Row: Drivetrain */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Drivetrain</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Drivetrain
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 font-semibold text-gold-400">
-                      {c.drivetrain || '2WD'}
+                      {c.drivetrain || "2WD"}
                     </td>
                   ))}
                 </tr>
 
                 {/* Row: Body Type */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Body Type</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Body Type
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 text-slate-200">
                       {c.body_type}
@@ -300,17 +330,21 @@ export default function ComparePage() {
 
                 {/* Row: Colors */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Exterior / Interior</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Exterior / Interior
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 text-slate-300">
-                      {c.color || 'Standard'} / {c.interior_color || 'Standard'}
+                      {c.color || "Standard"} / {c.interior_color || "Standard"}
                     </td>
                   ))}
                 </tr>
 
                 {/* Row: Location */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">Location</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    Location
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4 text-slate-200 font-semibold">
                       {c.location}
@@ -320,7 +354,9 @@ export default function ComparePage() {
 
                 {/* Row: Verified Inspection */}
                 <tr className="hover:bg-surface-200/30">
-                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">200-Pt Inspection</td>
+                  <td className="p-4 font-bold text-slate-400 bg-surface-400/30">
+                    200-Pt Inspection
+                  </td>
                   {compareList.map((c) => (
                     <td key={c.id} className="p-4">
                       {c.is_verified ? (
@@ -337,7 +373,9 @@ export default function ComparePage() {
                 {/* Key Features Rows */}
                 {allFeatures.map((feat) => (
                   <tr key={feat} className="hover:bg-surface-200/30">
-                    <td className="p-4 font-medium text-slate-400 bg-surface-400/30">{feat}</td>
+                    <td className="p-4 font-medium text-slate-400 bg-surface-400/30">
+                      {feat}
+                    </td>
                     {compareList.map((c) => {
                       const hasFeature = c.features?.includes(feat);
                       return (

@@ -1,15 +1,23 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Calculator, DollarSign, ArrowRight, MessageCircle } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import React, { useState } from "react";
+import {
+  Calculator,
+  DollarSign,
+  ArrowRight,
+  MessageCircle,
+} from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 
 interface FinanceCalculatorProps {
   carPrice: number;
   carTitle: string;
 }
 
-export default function FinanceCalculator({ carPrice, carTitle }: FinanceCalculatorProps) {
+export default function FinanceCalculator({
+  carPrice,
+  carTitle,
+}: FinanceCalculatorProps) {
   const [downPaymentPercent, setDownPaymentPercent] = useState<number>(20);
   const [loanPeriodMonths, setLoanPeriodMonths] = useState<number>(36);
   const [interestRateAnnual, setInterestRateAnnual] = useState<number>(16);
@@ -22,15 +30,20 @@ export default function FinanceCalculator({ carPrice, carTitle }: FinanceCalcula
   // Monthly installment using amortization formula: M = P * [r(1+r)^n] / [(1+r)^n - 1]
   const monthlyInstallment = Math.round(
     (loanPrincipal *
-      (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanPeriodMonths))) /
-      (Math.pow(1 + monthlyInterestRate, loanPeriodMonths) - 1)
+      (monthlyInterestRate *
+        Math.pow(1 + monthlyInterestRate, loanPeriodMonths))) /
+      (Math.pow(1 + monthlyInterestRate, loanPeriodMonths) - 1),
   );
 
-  const totalPayable = downPaymentAmount + monthlyInstallment * loanPeriodMonths;
+  const totalPayable =
+    downPaymentAmount + monthlyInstallment * loanPeriodMonths;
 
   const handleFinanceWhatsApp = () => {
     const text = `Hello AutoLink Financing! I would like to request asset financing assistance for ${carTitle} (${formatPrice(carPrice)}). My planned down payment is ${downPaymentPercent}% (${formatPrice(downPaymentAmount)}) over ${loanPeriodMonths} months.`;
-    window.open(`https://wa.me/256701234567?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(
+      `https://wa.me/256770864985?text=${encodeURIComponent(text)}`,
+      "_blank",
+    );
   };
 
   return (
@@ -41,8 +54,12 @@ export default function FinanceCalculator({ carPrice, carTitle }: FinanceCalcula
             <Calculator className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">Car Loan &amp; Finance Calculator</h3>
-            <p className="text-xs text-slate-400">Estimate monthly payments with partner commercial banks</p>
+            <h3 className="text-base font-bold text-white">
+              Car Loan &amp; Finance Calculator
+            </h3>
+            <p className="text-xs text-slate-400">
+              Estimate monthly payments with partner commercial banks
+            </p>
           </div>
         </div>
       </div>
@@ -54,7 +71,9 @@ export default function FinanceCalculator({ carPrice, carTitle }: FinanceCalcula
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1.5">
               <span>Down Payment: {downPaymentPercent}%</span>
-              <span className="text-gold-400">{formatPrice(downPaymentAmount)}</span>
+              <span className="text-gold-400">
+                {formatPrice(downPaymentAmount)}
+              </span>
             </div>
             <input
               type="range"
@@ -71,7 +90,9 @@ export default function FinanceCalculator({ carPrice, carTitle }: FinanceCalcula
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1.5">
               <span>Loan Duration: {loanPeriodMonths} Months</span>
-              <span className="text-gold-400">{loanPeriodMonths / 12} Years</span>
+              <span className="text-gold-400">
+                {loanPeriodMonths / 12} Years
+              </span>
             </div>
             <input
               type="range"
@@ -110,18 +131,29 @@ export default function FinanceCalculator({ carPrice, carTitle }: FinanceCalcula
             </span>
             <div className="text-2xl sm:text-3xl font-black text-gold-400 font-display mt-1">
               {formatPrice(monthlyInstallment)}
-              <span className="text-xs text-slate-400 font-normal"> / month</span>
+              <span className="text-xs text-slate-400 font-normal">
+                {" "}
+                / month
+              </span>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs pt-3 border-t border-border/60">
             <div>
-              <span className="text-[10px] text-slate-400 block">Total Financed</span>
-              <span className="font-bold text-white">{formatPrice(loanPrincipal)}</span>
+              <span className="text-[10px] text-slate-400 block">
+                Total Financed
+              </span>
+              <span className="font-bold text-white">
+                {formatPrice(loanPrincipal)}
+              </span>
             </div>
             <div>
-              <span className="text-[10px] text-slate-400 block">Total Cost</span>
-              <span className="font-bold text-white">{formatPrice(totalPayable)}</span>
+              <span className="text-[10px] text-slate-400 block">
+                Total Cost
+              </span>
+              <span className="font-bold text-white">
+                {formatPrice(totalPayable)}
+              </span>
             </div>
           </div>
 

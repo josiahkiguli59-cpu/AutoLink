@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { 
-  PlusCircle, 
-  Upload, 
-  X, 
-  Car, 
-  CheckCircle2, 
-  AlertCircle, 
-  Eye, 
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import {
+  PlusCircle,
+  Upload,
+  X,
+  Car,
+  CheckCircle2,
+  AlertCircle,
+  Eye,
   Sparkles,
   DollarSign,
   MapPin,
-  Camera
-} from 'lucide-react';
-import { useCars } from '@/lib/context/CarsContext';
-import { useAuth } from '@/lib/context/AuthContext';
-import { POPULAR_BRANDS, BODY_TYPES } from '@/lib/mock-data';
-import { CarCondition, FuelType, Transmission, BodyType } from '@/types';
-import { formatPrice } from '@/lib/utils';
+  Camera,
+} from "lucide-react";
+import { useCars } from "@/lib/context/CarsContext";
+import { useAuth } from "@/lib/context/AuthContext";
+import { POPULAR_BRANDS, BODY_TYPES } from "@/lib/mock-data";
+import { CarCondition, FuelType, Transmission, BodyType } from "@/types";
+import { formatPrice } from "@/lib/utils";
 
 export default function NewCarListingPage() {
   const router = useRouter();
@@ -32,53 +32,57 @@ export default function NewCarListingPage() {
   const [error, setError] = useState<string | null>(null);
 
   // Form State
-  const [title, setTitle] = useState('');
-  const [make, setMake] = useState('Toyota');
-  const [model, setModel] = useState('');
+  const [title, setTitle] = useState("");
+  const [make, setMake] = useState("Toyota");
+  const [model, setModel] = useState("");
   const [year, setYear] = useState<number>(2022);
   const [price, setPrice] = useState<number>(150000000);
-  const [currency, setCurrency] = useState<'UGX' | 'USD'>('UGX');
+  const [currency, setCurrency] = useState<"UGX" | "USD">("UGX");
   const [mileage, setMileage] = useState<number>(35000);
-  const [fuelType, setFuelType] = useState<FuelType>('Diesel');
-  const [transmission, setTransmission] = useState<Transmission>('Automatic');
-  const [condition, setCondition] = useState<CarCondition>('Foreign Used');
-  const [bodyType, setBodyType] = useState<BodyType>('SUV');
-  const [engineCapacity, setEngineCapacity] = useState('2800cc Turbo');
-  const [drivetrain, setDrivetrain] = useState<'4WD' | 'AWD' | 'FWD' | 'RWD'>('4WD');
-  const [color, setColor] = useState('Pearl White');
-  const [interiorColor, setInteriorColor] = useState('Black Leather');
-  const [location, setLocation] = useState('Kampala');
-  const [description, setDescription] = useState('');
-  const [whatsapp, setWhatsapp] = useState(user?.whatsapp || user?.phone || '+256701234567');
-  const [phone, setPhone] = useState(user?.phone || '+256701234567');
+  const [fuelType, setFuelType] = useState<FuelType>("Diesel");
+  const [transmission, setTransmission] = useState<Transmission>("Automatic");
+  const [condition, setCondition] = useState<CarCondition>("Foreign Used");
+  const [bodyType, setBodyType] = useState<BodyType>("SUV");
+  const [engineCapacity, setEngineCapacity] = useState("2800cc Turbo");
+  const [drivetrain, setDrivetrain] = useState<"4WD" | "AWD" | "FWD" | "RWD">(
+    "4WD",
+  );
+  const [color, setColor] = useState("Pearl White");
+  const [interiorColor, setInteriorColor] = useState("Black Leather");
+  const [location, setLocation] = useState("Kampala");
+  const [description, setDescription] = useState("");
+  const [whatsapp, setWhatsapp] = useState(
+    user?.whatsapp || user?.phone || "+256770864985",
+  );
+  const [phone, setPhone] = useState(user?.phone || "+256770864985");
 
   // Photo URLs state (allows adding custom image URLs or sample images)
   const [images, setImages] = useState<string[]>([
-    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80',
+    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
   ]);
-  const [customImageUrl, setCustomImageUrl] = useState('');
+  const [customImageUrl, setCustomImageUrl] = useState("");
 
   // Selected features
   const availableFeatures = [
-    'Sunroof / Panoramic Roof',
-    'Leather Heated Seats',
-    '360 Degree Camera',
-    'Keyless Push Start',
-    'Apple CarPlay & Android Auto',
-    'Differential Lock (4x4)',
-    'Lane Departure Warning',
-    'Adaptive Cruise Control',
-    'Power Tailgate',
-    'JBL / Harman Kardon Sound',
-    'Alloy Wheels',
-    'Cool Box / Fridge',
+    "Sunroof / Panoramic Roof",
+    "Leather Heated Seats",
+    "360 Degree Camera",
+    "Keyless Push Start",
+    "Apple CarPlay & Android Auto",
+    "Differential Lock (4x4)",
+    "Lane Departure Warning",
+    "Adaptive Cruise Control",
+    "Power Tailgate",
+    "JBL / Harman Kardon Sound",
+    "Alloy Wheels",
+    "Cool Box / Fridge",
   ];
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([
-    'Leather Heated Seats',
-    '360 Degree Camera',
-    'Keyless Push Start',
-    'Apple CarPlay & Android Auto',
+    "Leather Heated Seats",
+    "360 Degree Camera",
+    "Keyless Push Start",
+    "Apple CarPlay & Android Auto",
   ]);
 
   const handleFeatureToggle = (feature: string) => {
@@ -93,7 +97,7 @@ export default function NewCarListingPage() {
     e.preventDefault();
     if (customImageUrl.trim() && !images.includes(customImageUrl.trim())) {
       setImages([...images, customImageUrl.trim()]);
-      setCustomImageUrl('');
+      setCustomImageUrl("");
     }
   };
 
@@ -113,7 +117,7 @@ export default function NewCarListingPage() {
     setError(null);
 
     if (images.length === 0) {
-      setError('Please add at least one vehicle photo.');
+      setError("Please add at least one vehicle photo.");
       return;
     }
 
@@ -123,12 +127,14 @@ export default function NewCarListingPage() {
       const generatedTitle = title.trim() || `${year} ${make} ${model}`;
 
       const newCar = await addCar({
-        seller_id: user?.id || 'seller-1',
+        seller_id: user?.id || "seller-1",
         seller: {
-          full_name: user?.full_name || 'Victoria Motors Kampala',
+          full_name: user?.full_name || "Victoria Motors Kampala",
           phone: phone,
           whatsapp: whatsapp,
-          avatar_url: user?.avatar_url || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80',
+          avatar_url:
+            user?.avatar_url ||
+            "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80",
           is_verified: true,
           location: location,
         },
@@ -148,12 +154,14 @@ export default function NewCarListingPage() {
         color,
         interior_color: interiorColor,
         location,
-        description: description || `Clean ${year} ${make} ${model} available in ${location}. Excellent mechanical condition, duty paid.`,
+        description:
+          description ||
+          `Clean ${year} ${make} ${model} available in ${location}. Excellent mechanical condition, duty paid.`,
         features: selectedFeatures,
         images,
         is_featured: false,
         is_verified: true,
-        status: 'available',
+        status: "available",
       });
 
       setSuccess(true);
@@ -161,7 +169,7 @@ export default function NewCarListingPage() {
         router.push(`/cars/${newCar.id}`);
       }, 1500);
     } catch (err: any) {
-      setError(err?.message || 'Failed to publish listing.');
+      setError(err?.message || "Failed to publish listing.");
     } finally {
       setLoading(false);
     }
@@ -175,7 +183,8 @@ export default function NewCarListingPage() {
           Upload New Vehicle Listing
         </h1>
         <p className="text-xs sm:text-sm text-slate-400 mt-1">
-          Provide accurate specs, images, and WhatsApp contact to reach buyers across Uganda.
+          Provide accurate specs, images, and WhatsApp contact to reach buyers
+          across Uganda.
         </p>
       </div>
 
@@ -189,7 +198,9 @@ export default function NewCarListingPage() {
       {success && (
         <div className="flex items-center gap-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 text-xs text-emerald-400">
           <CheckCircle2 className="h-5 w-5 shrink-0" />
-          <span>Listing published successfully! Redirecting to vehicle page...</span>
+          <span>
+            Listing published successfully! Redirecting to vehicle page...
+          </span>
         </div>
       )}
 
@@ -203,7 +214,8 @@ export default function NewCarListingPage() {
                 <span>Vehicle Photos ({images.length})</span>
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Add clear exterior and interior photos. High quality pictures increase buyer enquiries by 80%.
+                Add clear exterior and interior photos. High quality pictures
+                increase buyer enquiries by 80%.
               </p>
             </div>
           </div>
@@ -215,7 +227,12 @@ export default function NewCarListingPage() {
                 key={idx}
                 className="group relative h-32 rounded-2xl overflow-hidden border border-border bg-surface-200"
               >
-                <Image src={imgUrl} alt={`Photo ${idx + 1}`} fill className="object-cover" />
+                <Image
+                  src={imgUrl}
+                  alt={`Photo ${idx + 1}`}
+                  fill
+                  className="object-cover"
+                />
                 {idx === 0 && (
                   <span className="absolute top-2 left-2 rounded-full bg-gold-500 px-2 py-0.5 text-[9px] font-black text-surface-400 uppercase">
                     Cover Photo
@@ -260,21 +277,33 @@ export default function NewCarListingPage() {
               <span>Quick add presets:</span>
               <button
                 type="button"
-                onClick={() => addSamplePhoto('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80')}
+                onClick={() =>
+                  addSamplePhoto(
+                    "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1200&q=80",
+                  )
+                }
                 className="rounded-lg bg-surface-200 px-2.5 py-1 text-slate-300 hover:text-gold-400 hover:bg-surface-100"
               >
                 + Luxury SUV Front
               </button>
               <button
                 type="button"
-                onClick={() => addSamplePhoto('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80')}
+                onClick={() =>
+                  addSamplePhoto(
+                    "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1200&q=80",
+                  )
+                }
                 className="rounded-lg bg-surface-200 px-2.5 py-1 text-slate-300 hover:text-gold-400 hover:bg-surface-100"
               >
                 + Leather Interior
               </button>
               <button
                 type="button"
-                onClick={() => addSamplePhoto('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80')}
+                onClick={() =>
+                  addSamplePhoto(
+                    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=80",
+                  )
+                }
                 className="rounded-lg bg-surface-200 px-2.5 py-1 text-slate-300 hover:text-gold-400 hover:bg-surface-100"
               >
                 + Side Profile
@@ -293,7 +322,9 @@ export default function NewCarListingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* Make */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Make</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Make
+              </label>
               <select
                 value={make}
                 onChange={(e) => setMake(e.target.value)}
@@ -309,7 +340,9 @@ export default function NewCarListingPage() {
 
             {/* Model */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Model</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Model
+              </label>
               <input
                 type="text"
                 required
@@ -322,7 +355,9 @@ export default function NewCarListingPage() {
 
             {/* Year */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Year</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Year
+              </label>
               <input
                 type="number"
                 required
@@ -355,7 +390,9 @@ export default function NewCarListingPage() {
 
             {/* Currency */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Currency</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Currency
+              </label>
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value as any)}
@@ -383,7 +420,9 @@ export default function NewCarListingPage() {
 
             {/* Condition */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Condition</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Condition
+              </label>
               <select
                 value={condition}
                 onChange={(e) => setCondition(e.target.value as any)}
@@ -391,13 +430,17 @@ export default function NewCarListingPage() {
               >
                 <option value="Foreign Used">Foreign Used (Imported)</option>
                 <option value="Brand New">Brand New</option>
-                <option value="Local Used">Local Used (UG Number Plates)</option>
+                <option value="Local Used">
+                  Local Used (UG Number Plates)
+                </option>
               </select>
             </div>
 
             {/* Body Type */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Body Type</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Body Type
+              </label>
               <select
                 value={bodyType}
                 onChange={(e) => setBodyType(e.target.value as any)}
@@ -413,7 +456,9 @@ export default function NewCarListingPage() {
 
             {/* Transmission */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Transmission</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Transmission
+              </label>
               <select
                 value={transmission}
                 onChange={(e) => setTransmission(e.target.value as any)}
@@ -426,7 +471,9 @@ export default function NewCarListingPage() {
 
             {/* Fuel Type */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Fuel Type</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Fuel Type
+              </label>
               <select
                 value={fuelType}
                 onChange={(e) => setFuelType(e.target.value as any)}
@@ -455,7 +502,9 @@ export default function NewCarListingPage() {
 
             {/* Drivetrain */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Drivetrain</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Drivetrain
+              </label>
               <select
                 value={drivetrain}
                 onChange={(e) => setDrivetrain(e.target.value as any)}
@@ -498,7 +547,9 @@ export default function NewCarListingPage() {
 
             {/* Location */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Location</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                Location
+              </label>
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -543,18 +594,20 @@ export default function NewCarListingPage() {
                   onClick={() => handleFeatureToggle(feat)}
                   className={`flex items-center gap-2 p-3 rounded-xl border text-left text-xs font-medium transition-all ${
                     isChecked
-                      ? 'border-gold-500 bg-gold-500/10 text-white'
-                      : 'border-border bg-surface-200 text-slate-400 hover:text-slate-200'
+                      ? "border-gold-500 bg-gold-500/10 text-white"
+                      : "border-border bg-surface-200 text-slate-400 hover:text-slate-200"
                   }`}
                 >
                   <div
                     className={`flex h-4 w-4 items-center justify-center rounded border ${
                       isChecked
-                        ? 'border-gold-500 bg-gold-500 text-surface-400'
-                        : 'border-slate-500'
+                        ? "border-gold-500 bg-gold-500 text-surface-400"
+                        : "border-slate-500"
                     }`}
                   >
-                    {isChecked && <span className="text-[10px] font-bold">✓</span>}
+                    {isChecked && (
+                      <span className="text-[10px] font-bold">✓</span>
+                    )}
                   </div>
                   <span className="truncate">{feat}</span>
                 </button>

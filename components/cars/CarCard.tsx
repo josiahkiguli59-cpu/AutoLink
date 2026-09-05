@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { 
-  Heart, 
-  Layers, 
-  MapPin, 
-  Fuel, 
-  Gauge, 
-  CheckCircle2, 
-  MessageCircle, 
-  ShieldCheck, 
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  Heart,
+  Layers,
+  MapPin,
+  Fuel,
+  Gauge,
+  CheckCircle2,
+  MessageCircle,
+  ShieldCheck,
   ChevronRight,
   Eye,
-  Camera
-} from 'lucide-react';
-import { Car } from '@/types';
-import { formatPrice, formatMileage, generateWhatsAppLink } from '@/lib/utils';
-import { useFavorites } from '@/lib/context/FavoritesContext';
-import { useCompare } from '@/lib/context/CompareContext';
+  Camera,
+} from "lucide-react";
+import { Car } from "@/types";
+import { formatPrice, formatMileage, generateWhatsAppLink } from "@/lib/utils";
+import { useFavorites } from "@/lib/context/FavoritesContext";
+import { useCompare } from "@/lib/context/CompareContext";
 
 interface CarCardProps {
   car: Car;
-  viewMode?: 'grid' | 'list';
+  viewMode?: "grid" | "list";
 }
 
-export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
+export default function CarCard({ car, viewMode = "grid" }: CarCardProps) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const { isInCompare, addToCompare, removeFromCompare } = useCompare();
 
@@ -35,7 +35,10 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
   const favorited = isFavorite(car.id);
   const inCompare = isInCompare(car.id);
 
-  const mainImage = car.images[activeImageIndex] || car.images[0] || 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80';
+  const mainImage =
+    car.images[activeImageIndex] ||
+    car.images[0] ||
+    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80";
 
   const handleCompareClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,16 +56,20 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
     toggleFavorite(car.id);
   };
 
-  const sellerPhone = car.seller?.whatsapp || car.seller?.phone || '+256701234567';
+  const sellerPhone =
+    car.seller?.whatsapp || car.seller?.phone || "+256770864985";
   const whatsappUrl = generateWhatsAppLink({
     phoneNumber: sellerPhone,
     carTitle: `${car.year} ${car.make} ${car.model}`,
     price: car.price,
     currency: car.currency,
-    carUrl: typeof window !== 'undefined' ? `${window.location.origin}/cars/${car.id}` : undefined,
+    carUrl:
+      typeof window !== "undefined"
+        ? `${window.location.origin}/cars/${car.id}`
+        : undefined,
   });
 
-  if (viewMode === 'list') {
+  if (viewMode === "list") {
     return (
       <div className="group relative flex flex-col md:flex-row overflow-hidden rounded-2xl border border-border bg-surface-300 hover:border-gold-500/50 hover:shadow-xl hover:shadow-black/40 transition-all duration-300">
         {/* Left: Image */}
@@ -94,10 +101,10 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
               onClick={handleCompareClick}
               className={`flex h-8 w-8 items-center justify-center rounded-xl backdrop-blur-md transition-all ${
                 inCompare
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-surface-400/80 text-slate-300 hover:text-white hover:bg-surface-400'
+                  ? "bg-blue-600 text-white"
+                  : "bg-surface-400/80 text-slate-300 hover:text-white hover:bg-surface-400"
               }`}
-              title={inCompare ? 'Remove from compare' : 'Add to compare'}
+              title={inCompare ? "Remove from compare" : "Add to compare"}
             >
               <Layers className="h-4 w-4" />
             </button>
@@ -105,12 +112,12 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
               onClick={handleFavoriteClick}
               className={`flex h-8 w-8 items-center justify-center rounded-xl backdrop-blur-md transition-all ${
                 favorited
-                  ? 'bg-red-500 text-white'
-                  : 'bg-surface-400/80 text-slate-300 hover:text-red-400 hover:bg-surface-400'
+                  ? "bg-red-500 text-white"
+                  : "bg-surface-400/80 text-slate-300 hover:text-red-400 hover:bg-surface-400"
               }`}
-              title={favorited ? 'Saved to favorites' : 'Save to favorites'}
+              title={favorited ? "Saved to favorites" : "Save to favorites"}
             >
-              <Heart className={`h-4 w-4 ${favorited ? 'fill-current' : ''}`} />
+              <Heart className={`h-4 w-4 ${favorited ? "fill-current" : ""}`} />
             </button>
           </div>
 
@@ -129,7 +136,10 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
                 <p className="text-xs font-semibold text-gold-400 uppercase tracking-wider">
                   {car.make} &middot; {car.body_type}
                 </p>
-                <Link href={`/cars/${car.id}`} className="hover:text-gold-400 transition-colors">
+                <Link
+                  href={`/cars/${car.id}`}
+                  className="hover:text-gold-400 transition-colors"
+                >
                   <h3 className="font-display text-lg font-bold text-white mt-1 line-clamp-1">
                     {car.title}
                   </h3>
@@ -139,7 +149,7 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
                 <div className="text-xl font-extrabold text-gold-400 font-display">
                   {formatPrice(car.price, car.currency)}
                 </div>
-                {car.currency === 'UGX' && (
+                {car.currency === "UGX" && (
                   <p className="text-[11px] text-slate-400">
                     ≈ ${Math.round(car.price / 3750).toLocaleString()} USD
                   </p>
@@ -162,7 +172,9 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
                 <span>{car.fuel_type}</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-slate-300">
-                <span className="text-gold-400 font-bold text-[11px]">GEAR:</span>
+                <span className="text-gold-400 font-bold text-[11px]">
+                  GEAR:
+                </span>
                 <span>{car.transmission}</span>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-slate-300">
@@ -175,7 +187,10 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
           {/* Action Row */}
           <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-border/60">
             <div className="text-xs text-slate-400 truncate max-w-[200px]">
-              Seller: <strong className="text-slate-200">{car.seller?.full_name || 'Verified Dealer'}</strong>
+              Seller:{" "}
+              <strong className="text-slate-200">
+                {car.seller?.full_name || "Verified Dealer"}
+              </strong>
             </div>
 
             <div className="flex items-center gap-2">
@@ -234,10 +249,10 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
             onClick={handleCompareClick}
             className={`flex h-8 w-8 items-center justify-center rounded-xl backdrop-blur-md transition-all ${
               inCompare
-                ? 'bg-blue-600 text-white'
-                : 'bg-surface-400/80 text-slate-300 hover:text-white hover:bg-surface-400'
+                ? "bg-blue-600 text-white"
+                : "bg-surface-400/80 text-slate-300 hover:text-white hover:bg-surface-400"
             }`}
-            title={inCompare ? 'Remove from comparison' : 'Compare this car'}
+            title={inCompare ? "Remove from comparison" : "Compare this car"}
           >
             <Layers className="h-4 w-4" />
           </button>
@@ -245,12 +260,12 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
             onClick={handleFavoriteClick}
             className={`flex h-8 w-8 items-center justify-center rounded-xl backdrop-blur-md transition-all ${
               favorited
-                ? 'bg-red-500 text-white'
-                : 'bg-surface-400/80 text-slate-300 hover:text-red-400 hover:bg-surface-400'
+                ? "bg-red-500 text-white"
+                : "bg-surface-400/80 text-slate-300 hover:text-red-400 hover:bg-surface-400"
             }`}
-            title={favorited ? 'Saved to favorites' : 'Save to favorites'}
+            title={favorited ? "Saved to favorites" : "Save to favorites"}
           >
-            <Heart className={`h-4 w-4 ${favorited ? 'fill-current' : ''}`} />
+            <Heart className={`h-4 w-4 ${favorited ? "fill-current" : ""}`} />
           </button>
         </div>
 
@@ -273,7 +288,10 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
           <p className="text-[11px] font-semibold text-gold-400 uppercase tracking-wider">
             {car.make} &middot; {car.year} &middot; {car.body_type}
           </p>
-          <Link href={`/cars/${car.id}`} className="group-hover:text-gold-400 transition-colors">
+          <Link
+            href={`/cars/${car.id}`}
+            className="group-hover:text-gold-400 transition-colors"
+          >
             <h3 className="font-display text-base font-bold text-white mt-1 line-clamp-1">
               {car.title}
             </h3>
@@ -284,7 +302,7 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
             <span className="text-xl font-extrabold text-gold-400 font-display">
               {formatPrice(car.price, car.currency)}
             </span>
-            {car.currency === 'UGX' && (
+            {car.currency === "UGX" && (
               <span className="text-[11px] text-slate-400">
                 ≈ ${Math.round(car.price / 3750).toLocaleString()}
               </span>
@@ -294,16 +312,28 @@ export default function CarCard({ car, viewMode = 'grid' }: CarCardProps) {
           {/* Specs Chips */}
           <div className="mt-3.5 grid grid-cols-3 gap-1.5 rounded-xl bg-surface-200/80 p-2 text-center text-[11px]">
             <div className="border-r border-border/50">
-              <span className="block text-[10px] text-slate-400 font-medium">Mileage</span>
-              <span className="font-semibold text-slate-200">{formatMileage(car.mileage)}</span>
+              <span className="block text-[10px] text-slate-400 font-medium">
+                Mileage
+              </span>
+              <span className="font-semibold text-slate-200">
+                {formatMileage(car.mileage)}
+              </span>
             </div>
             <div className="border-r border-border/50">
-              <span className="block text-[10px] text-slate-400 font-medium">Fuel</span>
-              <span className="font-semibold text-slate-200">{car.fuel_type}</span>
+              <span className="block text-[10px] text-slate-400 font-medium">
+                Fuel
+              </span>
+              <span className="font-semibold text-slate-200">
+                {car.fuel_type}
+              </span>
             </div>
             <div>
-              <span className="block text-[10px] text-slate-400 font-medium">Gearbox</span>
-              <span className="font-semibold text-slate-200">{car.transmission}</span>
+              <span className="block text-[10px] text-slate-400 font-medium">
+                Gearbox
+              </span>
+              <span className="font-semibold text-slate-200">
+                {car.transmission}
+              </span>
             </div>
           </div>
         </div>

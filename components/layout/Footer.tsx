@@ -35,7 +35,7 @@ export default function Footer() {
             </p>
             <div className="pt-2 flex items-center gap-3">
               <a
-                href="https://wa.me/256701234567?text=Hello%20AutoLink%20Support"
+                href="https://wa.me/256770864985?text=Hello%20AutoLink%20Support"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-whatsapp/15 px-3.5 py-2 text-xs font-semibold text-whatsapp hover:bg-whatsapp/25 transition-colors border border-whatsapp/30"
@@ -171,7 +171,7 @@ export default function Footer() {
               <div className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-gold-400 shrink-0" />
                 <a
-                  href="tel:+256701234567"
+                  href="tel:+256770864985"
                   className="hover:text-white transition-colors"
                 >
                   +256 701 234 567
