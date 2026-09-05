@@ -2142,12 +2142,13 @@
         );
 
       const today = new Date().toISOString().split("T")[0];
-      [document.getElementById("year"), document.getElementById("modalPick")].forEach(
-        (dateInput) => {
-          dateInput.min = today;
-          dateInput.value = today;
-        },
-      );
+      [
+        document.getElementById("year"),
+        document.getElementById("modalPick"),
+      ].forEach((dateInput) => {
+        dateInput.min = today;
+        dateInput.value = today;
+      });
       const currentTime = new Date();
       document.getElementById("modalReturn").value = [
         currentTime.getHours().toString().padStart(2, "0"),
